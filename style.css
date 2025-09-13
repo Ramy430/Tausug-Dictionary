@@ -65,9 +65,9 @@ h2 {
 }
 
 /* Search bar */
-#searchBtn {
-    width: 25%;       /* shortens the button to one-fourth of container width */
-    min-width: 40px;  /* prevents it from getting too small */
+#search {
+    width: 33%;       /* one-third width */
+    min-width: 100px;
 }
 
 
@@ -95,5 +95,6 @@ h2 {
 }
 
 }
+
 
 
