@@ -60,57 +60,8 @@ h2 {
   font-size: 1rem;
   color: #065f46;
   margin-top: 5px;
-  line-height: 1.5;
-  display: block;
-}
+  line-height: 1.
 
-/* Center search bar and style button */
-.search-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin: 20px 0;
-}
-
-/* Keep input width at 33% */
-#search {
-    width: 33%;
-    min-width: 100px;
-}
-
-/* Style search button */
-#searchBtn {
-    padding: 4px 10px;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-/* Responsive layout */
-@media (max-width: 600px) {
-    h1 {
-        font-size: 2rem;
-    }
-
-    h2 {
-        font-size: 1.5rem;
-    }
-
-    .tausug {
-        font-size: 1rem;
-    }
-
-    .english {
-        font-size: 0.95rem;
-    }
-
-    /* Stack search bar vertically on small screens */
-    .search-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #search {
-        width: 80%;
     }
 }
+
