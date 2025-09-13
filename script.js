@@ -64,6 +64,23 @@ searchBtn.addEventListener('click', () => {
   );
   renderDictionary(results);
 });
+const addWordBtn = document.getElementById('addWordBtn');
+const newTausug = document.getElementById('newTausug');
+const newEnglish = document.getElementById('newEnglish');
 
 // Initial render
 renderDictionary(dictionary);
+addWordBtn.addEventListener('click', () => {
+  const tausug = newTausug.value.trim();
+  const english = newEnglish.value.trim();
+
+  if (!tausug || !english) return;
+
+  dictionary.push({ tausug, english });
+  renderDictionary(dictionary);
+
+  // Clear input fields
+  newTausug.value = '';
+  newEnglish.value = '';
+});
+
