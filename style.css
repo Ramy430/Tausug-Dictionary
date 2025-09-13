@@ -1,3 +1,4 @@
+/* Global styles */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f0f4f8;
@@ -56,19 +57,24 @@ h1 {
   align-items: center;
 }
 
-.entry .tausug {
+.word-texts {
+  display: flex;
+  flex-direction: column;
+}
+
+.word-texts .tausug {
   font-weight: bold;
   color: #1d4ed8;
 }
 
-.entry .english {
+.word-texts .english {
   color: #065f46;
-  margin-left: 10px;
+  margin-top: 4px;
 }
 
-/* Edit/Delete buttons inside dictionary */
-.entry button {
-  margin-left: 10px;
+/* Edit/Delete buttons */
+.word-buttons button {
+  margin-left: 5px;
   padding: 4px 8px;
   font-size: 0.85rem;
   border-radius: 5px;
@@ -77,19 +83,19 @@ h1 {
   color: white;
 }
 
-.entry .editBtn {
-  background-color: #facc15; /* yellow */
+.word-buttons .editBtn {
+  background-color: #facc15;
 }
 
-.entry .editBtn:hover {
+.word-buttons .editBtn:hover {
   background-color: #eab308;
 }
 
-.entry .deleteBtn {
-  background-color: #ef4444; /* red */
+.word-buttons .deleteBtn {
+  background-color: #ef4444;
 }
 
-.entry .deleteBtn:hover {
+.word-buttons .deleteBtn:hover {
   background-color: #dc2626;
 }
 
@@ -97,19 +103,21 @@ h1 {
 .add-word-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
-  margin-top: 20px;
+  margin: 20px 0;
 }
 
 .add-word-container input {
-  padding: 8px 12px;
+  padding: 6px 10px;
   font-size: 1rem;
-  border-radius: 6px;
   border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 150px;
 }
 
 .add-word-container button {
-  padding: 8px 16px;
+  padding: 6px 12px;
   font-size: 1rem;
   background-color: #1d4ed8;
   color: white;
@@ -136,54 +144,3 @@ h1 {
     width: 80%;
   }
 }
-.add-word-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px; /* space between inputs and button */
-  margin: 20px 0;
-}
-
-.add-word-container input {
-  padding: 6px 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  width: 150px; /* same width for inputs */
-}
-
-.add-word-container button {
-  padding: 6px 12px;
-  font-size: 1rem;
-  background-color: #1d4ed8;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.add-word-container button:hover {
-  background-color: #2563eb;
-}
-
-.entry {
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding: 12px 15px;
-  margin-bottom: 10px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.05);
-  display: flex;
-  justify-content: space-between; /* words on left, buttons on right */
-  align-items: center;
-}
-
-.word-texts {
-  display: flex;
-  flex-direction: column;
-}
-
-.word-buttons button {
-  margin-left: 5px;
-}
-
-
