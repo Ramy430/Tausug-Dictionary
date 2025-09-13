@@ -67,48 +67,36 @@ h2 {
 /* Center search bar and style button */
 .search-container {
   display: flex;
-  justify-content: center;   /* center horizontally */
+  justify-content: center;
   align-items: center;
   gap: 10px;
   margin: 20px 0;
 }
 
-/* Keep input width at 33% */
+/* Input width */
 #search {
-  flex: 0 0 33%;    /* maintain 33% width, flex item */
-  min-width: 100px; /* prevents it from becoming too small */
+  flex: 0 0 33%;
+  min-width: 100px;
 }
 
-/* Make search button half the input width, keeping it aligned */
+/* Shorten the search button */
 #searchBtn {
-  flex: 0 0 auto;   /* don’t stretch */
-  width: 50%;       /* half the input width dynamically */
-  max-width: 100px; /* optional max width */
+  flex: 0 0 auto;
+  width: 50%;       /* half the input width */
+  max-width: 100px;
   padding: 4px 5px;
   font-size: 1rem;
   cursor: pointer;
 }
 
-
 /* Responsive layout */
 @media (max-width: 600px) {
-  h1 {
-    font-size: 2rem;
-  }
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  .tausug { font-size: 1rem; }
+  .english { font-size: 0.95rem; }
 
-  h2 {
-    font-size: 1.5rem;
-  }
-
-  .tausug {
-    font-size: 1rem;
-  }
-
-  .english {
-    font-size: 0.95rem;
-  }
-
-  /* Stack search bar vertically on small screens */
+  /* Stack search bar vertically */
   .search-container {
     flex-direction: column;
     align-items: center;
@@ -118,11 +106,5 @@ h2 {
     width: 80%;
   }
 }
-
-
-
-
-
-
 
 
