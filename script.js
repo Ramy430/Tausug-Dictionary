@@ -1,14 +1,10 @@
-// Admin flag: only admin can protect/unprotect
-const isAdmin = true;
-
-// Initial dictionary (localStorage fallback)
+// Initial dictionary entries
 let dictionary = JSON.parse(localStorage.getItem('dictionary')) || [
   { tausug: "buli'", english: "gluteus", protected: true },
-  { tausug: "unud bi'tis", english: "calf muscle", protected: false },
+  { tausug: "unud bi'tis", english: "calf muscle", protected: true },
   { tausug: "unud duwa-ow", english: "biceps muscle (2 heads)", protected: false }
 ];
 
-// DOM Elements
 const dictionaryContainer = document.getElementById('dictionary');
 const searchInput = document.getElementById('search');
 const searchBtn = document.getElementById('searchBtn');
@@ -17,12 +13,12 @@ const newTausug = document.getElementById('newTausug');
 const newEnglish = document.getElementById('newEnglish');
 const exportBtn = document.getElementById('exportBtn');
 
-// Save dictionary to localStorage
+// Save to localStorage
 function saveDictionary() {
   localStorage.setItem('dictionary', JSON.stringify(dictionary));
 }
 
-// Render dictionary
+// Render dictionary entries
 function renderDictionary(entries) {
   dictionaryContainer.innerHTML = '';
   entries.forEach((entry, index) => {
@@ -32,17 +28,15 @@ function renderDictionary(entries) {
       <div class="word-texts">
         <span class="tausug">${entry.tausug}</span>
         <span class="english">${entry.english}</span>
-        ${entry.protected ? '<span class="protected-word" title="Protected word">🔒</span>' : ''}
       </div>
       <div class="word-buttons">
-        <button class="editBtn" ${entry.protected && !isAdmin ? 'disabled' : ''}>Edit</button>
-        <button class="deleteBtn" ${entry.protected && !isAdmin ? 'disabled' : ''}>Delete</button>
-        ${isAdmin ? `<button class="protectBtn">${entry.protected ? 'Unprotect' : 'Protect'}</button>` : ''}
+        <button class="editBtn">Edit</button>
+        <button class="deleteBtn">Delete</button>
       </div>
     `;
 
     // Edit
-    div.querySelector('.editBtn')?.addEventListener('click', () => {
+    div.querySelector('.editBtn').addEventListener('click', () => {
       const newT = prompt("Edit Tausug word:", entry.tausug);
       const newE = prompt("Edit English translation:", entry.english);
       if (newT && newE) {
@@ -54,15 +48,12 @@ function renderDictionary(entries) {
     });
 
     // Delete
-    div.querySelector('.deleteBtn')?.addEventListener('click', () => {
+    div.querySelector('.deleteBtn').addEventListener('click', () => {
+      if (entry.protected) {
+        alert("This word is protected and cannot be deleted.");
+        return;
+      }
       dictionary.splice(index, 1);
-      saveDictionary();
-      renderDictionary(dictionary);
-    });
-
-    // Protect / Unprotect
-    div.querySelector('.protectBtn')?.addEventListener('click', () => {
-      entry.protected = !entry.protected;
       saveDictionary();
       renderDictionary(dictionary);
     });
@@ -95,7 +86,7 @@ searchBtn.addEventListener('click', () => {
   renderDictionary(results);
 });
 
-// Export dictionary as JSON
+// Export dictionary
 exportBtn.addEventListener('click', () => {
   const dataStr = JSON.stringify(dictionary, null, 2);
   const blob = new Blob([dataStr], { type: "application/json" });
