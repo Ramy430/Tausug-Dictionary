@@ -1,5 +1,5 @@
-// Initial dictionary entries
-const dictionary = [
+// Load dictionary from localStorage or use initial entries
+const dictionary = JSON.parse(localStorage.getItem('dictionary')) || [
   { tausug: "buli'", english: "gluteus" },
   { tausug: "unud bi'tis", english: "calf muscle" },
   { tausug: "unud duwa-ow", english: "biceps muscle (2 heads)" }
@@ -12,7 +12,12 @@ const addWordBtn = document.getElementById('addWordBtn');
 const newTausug = document.getElementById('newTausug');
 const newEnglish = document.getElementById('newEnglish');
 
-// Function to render dictionary
+// Save dictionary to localStorage
+function saveDictionary() {
+  localStorage.setItem('dictionary', JSON.stringify(dictionary));
+}
+
+// Render dictionary
 function renderDictionary(entries) {
   dictionaryContainer.innerHTML = '';
   entries.forEach((entry, index) => {
@@ -28,19 +33,21 @@ function renderDictionary(entries) {
         <button class="deleteBtn">Delete</button>
       </div>
     `;
-    // Edit button
+    // Edit
     div.querySelector('.editBtn').addEventListener('click', () => {
       const newT = prompt("Edit Tausug word:", entry.tausug);
       const newE = prompt("Edit English translation:", entry.english);
       if (newT && newE) {
         entry.tausug = newT;
         entry.english = newE;
+        saveDictionary();
         renderDictionary(dictionary);
       }
     });
-    // Delete button
+    // Delete
     div.querySelector('.deleteBtn').addEventListener('click', () => {
       dictionary.splice(index, 1);
+      saveDictionary();
       renderDictionary(dictionary);
     });
     dictionaryContainer.appendChild(div);
@@ -54,13 +61,14 @@ addWordBtn.addEventListener('click', () => {
   if (!tausug || !english) return;
 
   dictionary.push({ tausug, english });
+  saveDictionary();
   renderDictionary(dictionary);
 
   newTausug.value = '';
   newEnglish.value = '';
 });
 
-// Search functionality
+// Search
 searchBtn.addEventListener('click', () => {
   const term = searchInput.value.trim().toLowerCase();
   const results = dictionary.filter(entry =>
