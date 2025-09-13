@@ -5,11 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tausug-English Anatomy Dictionary</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Firebase App (core) -->
-<script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-app-compat.js"></script>
-<!-- Firestore -->
-<script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-firestore-compat.js"></script>
-
 </head>
 <body>
 
@@ -30,14 +25,12 @@
     <input type="text" id="newEnglish" placeholder="English translation">
     <button id="addWordBtn">Add Word</button>
   </div>
-  <!-- Export Dictionary Button -->
-<div class="export-container" style="text-align: center; margin-top: 20px;">
-  <button id="exportBtn">Export Dictionary (JSON)</button>
-</div>
 
+  <!-- Export Dictionary -->
+  <div class="export-container">
+    <button id="exportBtn">Export Dictionary (JSON)</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
-
