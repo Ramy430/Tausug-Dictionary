@@ -166,4 +166,24 @@ h1 {
   background-color: #2563eb;
 }
 
+.entry {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between; /* words on left, buttons on right */
+  align-items: center;
+}
+
+.word-texts {
+  display: flex;
+  flex-direction: column;
+}
+
+.word-buttons button {
+  margin-left: 5px;
+}
+
 
