@@ -113,4 +113,24 @@ h1 {
   }
 }
 
+/* Add/Edit Word Section */
+.add-word-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.add-word-container input {
+  padding: 5px;
+  font-size: 1rem;
+}
+
+.add-word-container button {
+  padding: 4px 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
 
