@@ -19,10 +19,14 @@ function renderDictionary(entries) {
     const div = document.createElement('div');
     div.className = 'entry';
     div.innerHTML = `
-      <span class="tausug">${entry.tausug}</span>
-      <span class="english">${entry.english}</span>
-      <button class="editBtn">Edit</button>
-      <button class="deleteBtn">Delete</button>
+      <div class="word-texts">
+        <span class="tausug">${entry.tausug}</span>
+        <span class="english">${entry.english}</span>
+      </div>
+      <div class="word-buttons">
+        <button class="editBtn">Edit</button>
+        <button class="deleteBtn">Delete</button>
+      </div>
     `;
     // Edit button
     div.querySelector('.editBtn').addEventListener('click', () => {
@@ -47,12 +51,14 @@ function renderDictionary(entries) {
 addWordBtn.addEventListener('click', () => {
   const tausug = newTausug.value.trim();
   const english = newEnglish.value.trim();
-  if (tausug && english) {
-    dictionary.push({ tausug, english });
-    renderDictionary(dictionary);
-    newTausug.value = '';
-    newEnglish.value = '';
-  }
+
+  if (!tausug || !english) return;
+
+  dictionary.push({ tausug, english });
+  renderDictionary(dictionary);
+
+  newTausug.value = '';
+  newEnglish.value = '';
 });
 
 // Search functionality
@@ -64,23 +70,6 @@ searchBtn.addEventListener('click', () => {
   );
   renderDictionary(results);
 });
-const addWordBtn = document.getElementById('addWordBtn');
-const newTausug = document.getElementById('newTausug');
-const newEnglish = document.getElementById('newEnglish');
 
 // Initial render
 renderDictionary(dictionary);
-addWordBtn.addEventListener('click', () => {
-  const tausug = newTausug.value.trim();
-  const english = newEnglish.value.trim();
-
-  if (!tausug || !english) return;
-
-  dictionary.push({ tausug, english });
-  renderDictionary(dictionary);
-
-  // Clear input fields
-  newTausug.value = '';
-  newEnglish.value = '';
-});
-
