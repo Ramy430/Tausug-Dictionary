@@ -88,7 +88,7 @@ h2 {
   font-size: 1rem;
   cursor: pointer;
 }
-}
+
 
 /* Responsive layout */
 @media (max-width: 600px) {
@@ -118,6 +118,7 @@ h2 {
     width: 80%;
   }
 }
+
 
 
 
