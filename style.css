@@ -27,7 +27,7 @@ h2 {
   background-color: #ffffff;
   border-radius: 12px;
   padding: 20px;
-  margin: 10px auto;
+  margin: 20px auto;
   max-width: 900px;
   box-shadow: 0 6px 12px rgba(0,0,0,0.1);
   transition: transform 0.2s;
@@ -60,10 +60,62 @@ h2 {
   font-size: 1rem;
   color: #065f46;
   margin-top: 5px;
-  line-height: 1.
-
-    }
+  line-height: 1.5;
+  display: block;
 }
+
+/* Center search bar and style button */
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+/* Keep input width at 33% */
+#search {
+  width: 33%;
+  min-width: 100px;
+}
+
+/* Halve the length of the search button */
+#searchBtn {
+  width: 50px;       /* makes the button shorter */
+  padding: 4px 5px;  /* keeps text readable */
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Responsive layout */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .tausug {
+    font-size: 1rem;
+  }
+
+  .english {
+    font-size: 0.95rem;
+  }
+
+  /* Stack search bar vertically on small screens */
+  .search-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #search {
+    width: 80%;
+  }
+}
+
 
 
 
