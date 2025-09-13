@@ -1,3 +1,4 @@
+/* General Body */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f0f4f8;
@@ -6,6 +7,7 @@ body {
   padding: 20px;
 }
 
+/* Header */
 h1 {
   text-align: center;
   font-size: 2.5rem;
@@ -13,42 +15,72 @@ h1 {
   margin-bottom: 20px;
 }
 
-.search-container,
-.add-word-container {
+/* Auth Container */
+#auth-container {
   display: flex;
   justify-content: center;
   gap: 10px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
-#search, .add-word-container input {
+#auth-container input {
   padding: 8px 12px;
-  font-size: 1rem;
   border-radius: 6px;
   border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
-#searchBtn, .add-word-container button, .entry button {
+#auth-container button {
   padding: 8px 16px;
   font-size: 1rem;
+  background-color: #1d4ed8;
+  color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   transition: 0.2s;
 }
 
-#searchBtn, .add-word-container button {
-  background-color: #1d4ed8;
-  color: white;
-}
-
-#searchBtn:hover, .add-word-container button:hover {
+#auth-container button:hover {
   background-color: #2563eb;
 }
 
-/* Dictionary entries */
+/* Search Bar */
+.search-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+#search {
+  padding: 8px 12px;
+  font-size: 1rem;
+  width: 250px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+#searchBtn {
+  padding: 8px 16px;
+  font-size: 1rem;
+  background-color: #1d4ed8;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#searchBtn:hover {
+  background-color: #2563eb;
+}
+
+/* Dictionary Entries */
 .entry {
-  background-color: #fff;
+  background-color: #ffffff;
   border-radius: 8px;
   padding: 12px 15px;
   margin-bottom: 10px;
@@ -56,53 +88,124 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .word-texts {
   display: flex;
-  flex-direction: column;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.entry .tausug {
+.word-texts .tausug {
   font-weight: bold;
   color: #1d4ed8;
 }
 
-.entry .english {
+.word-texts .english {
   color: #065f46;
-  margin-top: 4px;
 }
 
-/* Edit/Delete buttons */
-.entry .editBtn {
-  background-color: #facc15;
-  color: black;
+/* Edit/Delete Buttons */
+.word-buttons {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
 }
 
-.entry .editBtn:hover {
-  background-color: #eab308;
-}
-
-.entry .deleteBtn {
-  background-color: #ef4444;
+.word-buttons button {
+  padding: 5px 10px;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
   color: white;
 }
 
-.entry .deleteBtn:hover {
+.word-buttons .editBtn {
+  background-color: #facc15;
+}
+
+.word-buttons .editBtn:hover {
+  background-color: #eab308;
+}
+
+.word-buttons .deleteBtn {
+  background-color: #ef4444;
+}
+
+.word-buttons .deleteBtn:hover {
   background-color: #dc2626;
 }
 
-/* Responsive */
+/* Add Word Section */
+.add-word-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.add-word-container input {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.add-word-container button {
+  padding: 8px 16px;
+  font-size: 1rem;
+  background-color: #1d4ed8;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.add-word-container button:hover {
+  background-color: #2563eb;
+}
+
+/* Export Button */
+.export-container button {
+  padding: 8px 16px;
+  font-size: 1rem;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.export-container button:hover {
+  background-color: #059669;
+}
+
+/* Responsive for Mobile */
 @media (max-width: 600px) {
+  #auth-container,
   .search-container,
-  .add-word-container {
+  .add-word-container,
+  .word-buttons {
     flex-direction: column;
     align-items: center;
   }
 
-  #search, .add-word-container input {
+  #search,
+  .add-word-container input {
     width: 80%;
   }
+
+  .entry {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .word-buttons {
+    margin-top: 10px;
+  }
 }
-
-
