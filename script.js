@@ -1,5 +1,5 @@
 const dictionary = [
-  { tausug: "bitikan ugat ha kakidkiran", english: "nervous system in the dorsal cavity, including brain, spinal cord, and meninges" },
+  { tausug: "bitikan ugat ha kakidkiran", english: "peripheral nervous system" },
   { tausug: "Dorsal (ha taykud)", english: "located on or toward the back" },
   { tausug: "Gawunggang Kulakub", english: "cranial cavity, houses the brain" },
   { tausug: "Gawunggang tangkkal", english: "spinal cavity or vertebral canal, houses the spinal cord" },
@@ -47,3 +47,4 @@ searchBtn.addEventListener("click", searchDictionary);
 searchInput.addEventListener("keyup", (e) => {
   if (e.key === "Enter") searchDictionary();
 });
+
