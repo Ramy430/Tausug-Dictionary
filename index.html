@@ -5,33 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tausug-English Anatomy Dictionary</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase App -->
+  <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-auth-compat.js"></script>
 </head>
 <body>
 
-  <h1>Tausug-English Anatomy Dictionary</h1>
+<h1>Tausug-English Anatomy Dictionary</h1>
 
-  <!-- Search Bar -->
-  <div class="search-container">
-    <input type="text" id="search" placeholder="Search Tausug or English...">
-    <button id="searchBtn">Search</button>
-  </div>
+<!-- Login -->
+<div id="auth-container">
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+  <button id="loginBtn">Login</button>
+  <button id="signupBtn">Sign Up</button>
+</div>
 
-  <!-- Dictionary Display -->
-  <div id="dictionary"></div>
+<!-- Search Bar -->
+<div class="search-container">
+  <input type="text" id="search" placeholder="Search Tausug or English...">
+  <button id="searchBtn">Search</button>
+</div>
 
-  <!-- Add Word Section -->
-  <div class="add-word-container">
-    <input type="text" id="newTausug" placeholder="New Tausug word">
-    <input type="text" id="newEnglish" placeholder="English translation">
-    <button id="addWordBtn">Add Word</button>
-  </div>
+<!-- Dictionary Display -->
+<div id="dictionary"></div>
 
-  <!-- Export Button -->
-  <div class="export-container" style="text-align: center; margin-top: 20px;">
-    <button id="exportBtn">Export Dictionary (JSON)</button>
-  </div>
+<!-- Add Word Section -->
+<div class="add-word-container">
+  <input type="text" id="newTausug" placeholder="New Tausug word">
+  <input type="text" id="newEnglish" placeholder="English translation">
+  <button id="addWordBtn">Add Word</button>
+</div>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
-
