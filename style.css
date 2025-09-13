@@ -85,11 +85,25 @@ h2 {
     font-size: 0.95rem;
   }
 
-  /* Search bar */
+/* Center search bar and style button */
+.search-container {
+    display: flex;            /* use flexbox */
+    justify-content: center;  /* center horizontally */
+    gap: 10px;                /* space between input and button */
+    margin: 20px 0;           /* spacing above and below */
+}
 
+/* Keep search input width at 33% */
 #search {
-    width: 33%;       /* one-third width of container */
+    width: 33%;       
     min-width: 100px; /* prevents it from becoming too small */
+}
+
+/* Style search button */
+#searchBtn {
+    padding: 4px 10px;        /* adjust size */
+    font-size: 1rem;          
+    cursor: pointer;          /* pointer on hover */
 }
 
 
