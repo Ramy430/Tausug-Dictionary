@@ -15,7 +15,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* Center search bar and style button */
+/* Center search bar */
 .search-container {
   display: flex;
   justify-content: center;
@@ -68,10 +68,11 @@ h1 {
   line-height: 1.4;
 }
 
-/* Add Word Section */
+/* Add/Edit Word Section */
 .add-word-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
   margin: 20px 0;
 }
@@ -112,25 +113,3 @@ h1 {
     width: 80%;
   }
 }
-
-/* Add/Edit Word Section */
-.add-word-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin: 20px 0;
-}
-
-.add-word-container input {
-  padding: 5px;
-  font-size: 1rem;
-}
-
-.add-word-container button {
-  padding: 4px 10px;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-
