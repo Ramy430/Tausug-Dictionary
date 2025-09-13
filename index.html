@@ -16,6 +16,9 @@
     <button id="searchBtn">Search</button>
   </div>
 
+  <!-- Dictionary Container -->
+  <div id="dictionary"></div>
+
   <!-- Add Word Section -->
   <div class="add-word-container">
     <input type="text" id="newTausug" placeholder="New Tausug word">
@@ -23,69 +26,6 @@
     <button id="addWordBtn">Add Word</button>
   </div>
 
-  <!-- Dictionary Container -->
-  <div id="dictionary"></div>
-
-  <script>
-    const dictionary = [
-      { tausug: "buli'", english: "gluteus" },
-      { tausug: "unud buli'", english: "gluteus muscle" },
-      { tausug: "unud bi'tis", english: "calf muscle" },
-      { tausug: "unud buktun tuw-ow(3 heads) niya", english: "triceps muscle" },
-      { tausug: "unud duwa-ow(2 heads) kabaakan ha unahan sin buktun ha taas", english: "biceps muscle" },
-      // Add more words here
-    ];
-
-    const dictionaryContainer = document.getElementById('dictionary');
-    const searchInput = document.getElementById('search');
-    const searchBtn = document.getElementById('searchBtn');
-
-    function displayDictionary(words) {
-      dictionaryContainer.innerHTML = '';
-      words.forEach(entry => {
-        const div = document.createElement('div');
-        div.className = 'entry';
-        div.innerHTML = `<span class="tausug">${entry.tausug}</span><span class="english">${entry.english}</span>`;
-        dictionaryContainer.appendChild(div);
-      });
-    }
-
-    // Display all words initially
-    displayDictionary(dictionary);
-
-    // Search functionality
-    searchBtn.addEventListener('click', () => {
-      const query = searchInput.value.toLowerCase();
-      const filtered = dictionary.filter(entry => 
-        entry.tausug.toLowerCase().includes(query) || entry.english.toLowerCase().includes(query)
-      );
-      displayDictionary(filtered);
-    });
-
-    // Add word functionality
-    const addWordBtn = document.getElementById('addWordBtn');
-    const newTausug = document.getElementById('newTausug');
-    const newEnglish = document.getElementById('newEnglish');
-
-    addWordBtn.addEventListener('click', () => {
-      const tausug = newTausug.value.trim();
-      const english = newEnglish.value.trim();
-
-      if (tausug && english) {
-        const newEntry = { tausug, english };
-        dictionary.push(newEntry); // add to dictionary array
-
-        // Display new entry
-        const div = document.createElement('div');
-        div.className = 'entry';
-        div.innerHTML = `<span class="tausug">${tausug}</span><span class="english">${english}</span>`;
-        dictionaryContainer.appendChild(div);
-
-        // Clear inputs
-        newTausug.value = '';
-        newEnglish.value = '';
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
