@@ -65,16 +65,11 @@ h2 {
 }
 
 /* Search bar */
-#search {
-  width: 100%;
-  padding: 10px;
-  margin: 10px auto 20px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  display: block;
-  max-width: 900px;
+#searchBtn {
+    width: 25%;       /* shortens the button to one-fourth of container width */
+    min-width: 40px;  /* prevents it from getting too small */
 }
+
 
 /* Responsive layout */
 @media (max-width: 600px) {
@@ -93,4 +88,5 @@ h2 {
   .english {
     font-size: 0.95rem;
   }
+
 }
