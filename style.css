@@ -136,3 +136,34 @@ h1 {
     width: 80%;
   }
 }
+.add-word-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* space between inputs and button */
+  margin: 20px 0;
+}
+
+.add-word-container input {
+  padding: 6px 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 150px; /* same width for inputs */
+}
+
+.add-word-container button {
+  padding: 6px 12px;
+  font-size: 1rem;
+  background-color: #1d4ed8;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-word-container button:hover {
+  background-color: #2563eb;
+}
+
+
