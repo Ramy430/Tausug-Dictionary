@@ -18,6 +18,22 @@ function saveDictionary() {
 }
 
 // Render dictionary
+// Edit
+div.querySelector('.editBtn').addEventListener('click', async () => {
+  const newT = prompt("Edit Tausug word:", entry.tausug);
+  const newE = prompt("Edit English translation:", entry.english);
+  if (newT && newE) {
+    await db.collection('dictionary').doc(entry.id).update({ tausug: newT, english: newE });
+    loadDictionary();
+  }
+});
+
+// Delete
+div.querySelector('.deleteBtn').addEventListener('click', async () => {
+  await db.collection('dictionary').doc(entry.id).delete();
+  loadDictionary();
+});
+
 function renderDictionary(entries) {
   dictionaryContainer.innerHTML = '';
   entries.forEach((entry, index) => {
@@ -94,5 +110,6 @@ exportBtn.addEventListener('click', () => {
 
   URL.revokeObjectURL(url);
 });
+
 
 
