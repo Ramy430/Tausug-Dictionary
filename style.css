@@ -13,39 +13,42 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* Search Bar */
-.search-container {
+.search-container,
+.add-word-container {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
-#search {
+#search, .add-word-container input {
   padding: 8px 12px;
   font-size: 1rem;
-  width: 250px;
   border-radius: 6px;
   border: 1px solid #ccc;
 }
 
-#searchBtn {
+#searchBtn, .add-word-container button, .entry button {
   padding: 8px 16px;
   font-size: 1rem;
-  background-color: #1d4ed8;
-  color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: 0.2s;
 }
 
-#searchBtn:hover {
+#searchBtn, .add-word-container button {
+  background-color: #1d4ed8;
+  color: white;
+}
+
+#searchBtn:hover, .add-word-container button:hover {
   background-color: #2563eb;
 }
 
 /* Dictionary entries */
 .entry {
-  background-color: #ffffff;
+  background-color: #fff;
   border-radius: 8px;
   padding: 12px 15px;
   margin-bottom: 10px;
@@ -57,78 +60,36 @@ h1 {
 
 .word-texts {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
 }
 
-.tausug {
+.entry .tausug {
   font-weight: bold;
   color: #1d4ed8;
 }
 
-.english {
+.entry .english {
   color: #065f46;
+  margin-top: 4px;
 }
 
-.protected-word {
-  color: #f59e0b;
-  font-weight: bold;
-  cursor: default;
+/* Edit/Delete buttons */
+.entry .editBtn {
+  background-color: #facc15;
+  color: black;
 }
 
-/* Buttons */
-.entry button {
-  margin-left: 5px;
-  padding: 4px 8px;
-  font-size: 0.85rem;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
+.entry .editBtn:hover {
+  background-color: #eab308;
+}
+
+.entry .deleteBtn {
+  background-color: #ef4444;
   color: white;
 }
 
-.editBtn { background-color: #facc15; }
-.editBtn:hover { background-color: #eab308; }
-
-.deleteBtn { background-color: #ef4444; }
-.deleteBtn:hover { background-color: #dc2626; }
-
-.protectBtn { background-color: #3b82f6; }
-.protectBtn:hover { background-color: #2563eb; }
-
-/* Add Word Section */
-.add-word-container {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.add-word-container input {
-  padding: 8px 12px;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  width: 150px;
-}
-
-.add-word-container button {
-  padding: 8px 16px;
-  font-size: 1rem;
-  background-color: #1d4ed8;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.add-word-container button:hover {
-  background-color: #2563eb;
-}
-
-.export-container {
-  text-align: center;
-  margin-top: 20px;
+.entry .deleteBtn:hover {
+  background-color: #dc2626;
 }
 
 /* Responsive */
@@ -138,7 +99,10 @@ h1 {
     flex-direction: column;
     align-items: center;
   }
+
   #search, .add-word-container input {
     width: 80%;
   }
 }
+
+
