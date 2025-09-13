@@ -86,11 +86,11 @@ h2 {
   }
 
   /* Search bar */
-#search {
-    width: 33%;       /* one-third width */
-    min-width: 100px;
-}
 
+#search {
+    width: 33%;       /* one-third width of container */
+    min-width: 100px; /* prevents it from becoming too small */
+}
 
 
 
