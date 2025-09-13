@@ -67,7 +67,7 @@ h2 {
 /* Center search bar and style button */
 .search-container {
   display: flex;
-  justify-content: center;
+  justify-content: center;   /* center horizontally */
   align-items: center;
   gap: 10px;
   margin: 20px 0;
@@ -75,16 +75,19 @@ h2 {
 
 /* Keep input width at 33% */
 #search {
-  width: 33%;
-  min-width: 100px;
+  flex: 0 0 33%;    /* maintain 33% width, flex item */
+  min-width: 100px; /* prevents it from becoming too small */
 }
 
-/* Halve the length of the search button */
+/* Make search button half the input width, keeping it aligned */
 #searchBtn {
-  width: 50px;       /* makes the button shorter */
-  padding: 4px 5px;  /* keeps text readable */
+  flex: 0 0 auto;   /* don’t stretch */
+  width: 50%;       /* half the input width dynamically */
+  max-width: 100px; /* optional max width */
+  padding: 4px 5px;
   font-size: 1rem;
   cursor: pointer;
+}
 }
 
 /* Responsive layout */
@@ -115,6 +118,7 @@ h2 {
     width: 80%;
   }
 }
+
 
 
 
