@@ -12,7 +12,7 @@ const addWordBtn = document.getElementById('addWordBtn');
 const newTausug = document.getElementById('newTausug');
 const newEnglish = document.getElementById('newEnglish');
 
-// Function to render dictionary entries
+// Function to render dictionary
 function renderDictionary(entries) {
   dictionaryContainer.innerHTML = '';
   entries.forEach((entry, index) => {
@@ -51,7 +51,6 @@ function renderDictionary(entries) {
 addWordBtn.addEventListener('click', () => {
   const tausug = newTausug.value.trim();
   const english = newEnglish.value.trim();
-
   if (!tausug || !english) return;
 
   dictionary.push({ tausug, english });
