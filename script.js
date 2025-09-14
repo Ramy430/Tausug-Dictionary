@@ -1,3 +1,4 @@
+
 // ----------------------
 // Firebase Configuration
 // ----------------------
@@ -16,9 +17,9 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 
 // ----------------------
-// Admin UID (set here)
+// Admin UID
 // ----------------------
-let ADMIN_UID = ""; // Will be detected automatically after login
+let ADMIN_UID = ""; // Replace with your Firebase UID
 
 // DOM Elements
 const dictionaryContainer = document.getElementById('dictionary');
@@ -58,9 +59,7 @@ auth.onAuthStateChanged(user => {
     logoutBtn.style.display = "inline";
     welcomeMessage.textContent = "Welcome! Assalaamu Alykum, " + user.displayName;
 
-    // Set ADMIN_UID (replace with your Firebase UID)
-    ADMIN_UID = "YOUR_ADMIN_UID";
-
+    ADMIN_UID = "YOUR_ADMIN_UID"; // Replace this with your UID
     importOldDictionary();
     loadDictionary();
   } else {
@@ -71,7 +70,7 @@ auth.onAuthStateChanged(user => {
   }
 });
 
-// Import Old Dictionary
+// Import old dictionary if empty
 async function importOldDictionary() {
   const snapshot = await db.collection('TausugDictionary').get();
   if (snapshot.empty) {
@@ -81,7 +80,7 @@ async function importOldDictionary() {
   }
 }
 
-// Load Dictionary
+// Load dictionary entries
 function loadDictionary() {
   db.collection('TausugDictionary').orderBy('tausug').onSnapshot(snapshot => {
     dictionaryContainer.innerHTML = "";
@@ -126,11 +125,29 @@ function loadDictionary() {
   });
 }
 
-// Add New Word
+// Add new word
 addWordBtn.addEventListener('click', async () => {
   if (!auth.currentUser) return alert("Please login first!");
-  if (auth.currentUser.uid !== ADMIN_UID) return alert("Only admin can add words!");
   const tausug = newTausug.value.trim();
   const english = newEnglish.value.trim();
   if (!tausug || !english) return;
-  await db.collection('Taus
+  await db.collection('TausugDictionary').add({ tausug, english });
+  newTausug.value = "";
+  newEnglish.value = "";
+});
+
+// Search dictionary
+searchBtn.addEventListener('click', async () => {
+  const term = searchInput.value.trim().toLowerCase();
+  const snapshot = await db.collection('TausugDictionary').get();
+  dictionaryContainer.innerHTML = "";
+  snapshot.forEach(doc => {
+    const entry = doc.data();
+    if (entry.tausug.toLowerCase().includes(term) || entry.english.toLowerCase().includes(term)) {
+      const div = document.createElement('div');
+      div.className = 'word-entry';
+      div.innerHTML = `<span class="tausug">${entry.tausug}</span> - <span class="english">${entry.english}</span>`;
+      dictionaryContainer.appendChild(div);
+    }
+  });
+});
