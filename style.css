@@ -1,0 +1,184 @@
+/* General Container */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ccc; /* gray background */
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Header Section */
+.header-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Highlighted Header Text */
+.highlight-text {
+  position: relative;
+  color: #fff;
+  font-weight: bold;
+}
+
+.highlight-text::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #32CD32; /* green highlight behind text */
+  z-index: -1;
+  border-radius: 5px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease;
+}
+
+.highlight-text.loaded::before {
+  transform: scaleX(1);
+}
+
+/* Auth Section */
+#auth-section {
+  text-align: center;
+  margin: 15px auto;
+}
+
+#auth-section button {
+  background-color: transparent;
+  color: #fff;
+  padding: 10px 20px;
+  border: 2px solid #32CD32;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 5px;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+}
+
+#auth-section button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #32CD32;
+  z-index: 0;
+  border-radius: 8px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+#auth-section button:hover::before {
+  transform: scaleX(1);
+}
+
+#auth-section button span {
+  position: relative;
+  z-index: 1;
+}
+
+/* Welcome Box */
+.welcome-box {
+  background-color: #1E90FF; /* blue box */
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  margin: 15px auto;
+  max-width: 600px;
+  text-align: center;
+  font-size: 1.1em;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.welcome-box.show {
+  opacity: 1;
+}
+
+/* Search Section */
+.search-container {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.search-container input {
+  padding: 10px;
+  width: 60%;
+  max-width: 400px;
+  margin-right: 5px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+}
+
+.search-container button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #2b6cb0;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background-color: #1e4e8c;
+}
+
+/* Dictionary Entries */
+.word-entry {
+  background-color: #eee;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.word-buttons button {
+  margin-left: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #ff6b6b;
+  color: #fff;
+}
+
+.word-buttons button:hover {
+  background-color: #e55050;
+}
+
+/* Add Word Section */
+.add-word-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.add-word-container input {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+}
+
+.add-word-container button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #2b6cb0;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-word-container button:hover {
+  background-color: #1e4e8c;
+}
