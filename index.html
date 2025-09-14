@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tausug-English Dictionary</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header Section -->
+    <div class="header-section">
+      <h1><span class="highlight-text">Tausug-English Dictionary</span></h1>
+      <div class="subheader"><span class="highlight-text">Omar Municipality, Sulu Philippines</span></div>
+    </div>
+
+    <!-- Auth Section -->
+    <div id="auth-section">
+      <button id="loginBtn"><span>Login</span></button>
+      <button id="logoutBtn" style="display:none;"><span>Logout</span></button>
+    </div>
+
+    <!-- Welcome Message -->
+    <div id="welcomeMessage" class="welcome-box"></div>
+
+    <!-- Search Section -->
+    <div class="search-container">
+      <input type="text" id="search" placeholder="Search Tausug or English...">
+      <button id="searchBtn">Search</button>
+    </div>
+
+    <!-- Dictionary Display -->
+    <div id="dictionary"></div>
+
+    <!-- Add Word Section -->
+    <div class="add-word-container">
+      <input type="text" id="newTausug" placeholder="New Tausug word">
+      <input type="text" id="newEnglish" placeholder="English translation">
+      <button id="addWordBtn">Add Word</button>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
