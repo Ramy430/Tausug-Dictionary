@@ -84,15 +84,20 @@ auth.onAuthStateChanged(user => {
   if (user) {
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline";
+    // Show welcome message with fade-in
     welcomeMessage.textContent = `Welcome! Assalaamu Alykum, ${user.displayName}`;
     welcomeMessage.classList.add("show");
+
     importOldDictionary();
     loadDictionary();
   } else {
     loginBtn.style.display = "inline";
     logoutBtn.style.display = "none";
+
+    // Fade out welcome message
     welcomeMessage.classList.remove("show");
     setTimeout(() => welcomeMessage.textContent = "", 1000);
+
     dictionaryContainer.innerHTML = "";
   }
 });
