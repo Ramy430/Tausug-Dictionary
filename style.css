@@ -6,35 +6,31 @@ body, html {
   font-family: Arial, sans-serif;
 }
 
-/* Outer background: black 40%, blue 60% */
+/* Page background: blue gradient surrounding the central square */
 body {
-  background: linear-gradient(
-    120deg,
-    black 40%,      
-    steelblue 100%
-  );
+  background: linear-gradient(to right, #87ceeb 0%, #1e90ff 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
 }
 
-/* Center container (square) */
+/* Central container (light blue square) */
 .container {
-  background-color: lightblue; /* Light blue square */
+  background-color: lightblue;
   padding: 30px;
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   width: 100%;
   max-width: 400px;
 }
 
-/* Title */
+/* Titles */
 h1 {
   margin: 0;
   font-size: 1.8rem;
-  color: #003366;
+  color: #003366; /* dark blue */
 }
 
 h2 {
