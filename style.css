@@ -1,211 +1,206 @@
-/* ----------------------
-   General Body
----------------------- */
+/* General Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #e0e0e0; /* gray surroundings */
-  display: flex;
-  justify-content: center;
+  background: linear-gradient(135deg, #2BC0E4, #00C851);
+  background-size: 400% 400%;
+  animation: waveBackground1 30s ease-in-out infinite;
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* ----------------------
-   Main Container
----------------------- */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(225deg, #00c851, #2BC0E4);
+  background-size: 400% 400%;
+  animation: waveBackground2 45s ease-in-out infinite;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* Wave animations */
+@keyframes waveBackground1 {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes waveBackground2 {
+  0% { background-position: 100% 50%; }
+  50% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* Container with gray square and wave overlay */
 .container {
-  max-width: 800px;
-  width: 90%;
-  background-color: #ffffff;
-  padding: 20px;
-  margin: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 40px 20px 60px 20px; /* extra bottom space for waves */
   text-align: center;
+  background-color: #ccc; /* gray square */
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  overflow: hidden;
 }
 
-/* ----------------------
-   Titles & Headers
----------------------- */
-h1 {
-  font-size: 2.5em;
-  color: green; /* title green */
-  margin-bottom: 10px;
+/* Bottom curved waves */
+.container::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  width: 200%;
+  height: 60px;
+  background: rgba(43, 192, 228, 0.5);
+  border-radius: 45%;
+  transform: rotate(-5deg);
+  animation: waveMove 6s linear infinite;
+  z-index: 0;
 }
 
-.subheader {
-  font-size: 1.3em;
-  color: green; /* subheader green */
-  margin-bottom: 20px;
+/* Optional second wave layer */
+.container::before {
+  content: "";
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  width: 200%;
+  height: 50px;
+  background: rgba(0, 200, 81, 0.5);
+  border-radius: 50%;
+  transform: rotate(3deg);
+  animation: waveMoveReverse 8s linear infinite;
+  z-index: 0;
 }
 
-/* ----------------------
-   Search Section
----------------------- */
-.search-container {
-  margin: 15px 0;
+@keyframes waveMove {
+  0% { transform: translateX(0) rotate(-5deg); }
+  50% { transform: translateX(-50px) rotate(-5deg); }
+  100% { transform: translateX(0) rotate(-5deg); }
 }
 
-.search-container input {
-  padding: 10px;
-  width: 60%;
-  max-width: 400px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-right: 5px;
+@keyframes waveMoveReverse {
+  0% { transform: translateX(0) rotate(3deg); }
+  50% { transform: translateX(40px) rotate(3deg); }
+  100% { transform: translateX(0) rotate(3deg); }
 }
 
-.search-container button {
-  padding: 10px 20px;
-  border: none;
-  background-color: #007BFF;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s;
+/* Header Section */
+.header-section h1,
+.header-section .subheader {
+  display: block;
+  margin: 10px auto;
 }
 
-.search-container button:hover {
-  background-color: #0056b3;
+/* Highlight text for headers and login button */
+.highlight-text {
+  color: #fff;
+  font-weight: bold;
+  padding: 2px 6px;
+  background-color: #1E90FF;
+  border-radius: 5px;
 }
 
-/* ----------------------
-   Add Word Section
----------------------- */
-.add-word-container {
-  margin: 20px 0;
-}
-
-.add-word-container input {
-  padding: 10px;
-  width: 45%;
-  max-width: 300px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin: 5px 5px 5px 0;
-}
-
-.add-word-container button {
-  padding: 10px 20px;
-  border: none;
-  background-color: #28a745;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 5px;
-  transition: background 0.3s;
-}
-
-.add-word-container button:hover {
-  background-color: #1e7e34;
-}
-
-/* ----------------------
-   Login Section
----------------------- */
+/* Auth Section */
 #auth-section {
-  margin: 15px 0;
+  text-align: center;
+  margin: 15px auto;
 }
 
 #auth-section button {
+  background-color: #1E90FF;
+  color: white;
   padding: 10px 20px;
   border: none;
-  background-color: green;
-  color: white;
   border-radius: 8px;
   cursor: pointer;
-  margin: 5px;
-  transition: background 0.3s ease;
-}
-
-#auth-section button:hover {
-  background-color: darkgreen;
-}
-
-/* ----------------------
-   Dictionary Display
----------------------- */
-#dictionary {
-  margin-top: 20px;
-  text-align: left;
-}
-
-.word-entry {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 12px;
-  border-bottom: 1px solid #ccc;
-  border-radius: 6px;
-  margin-bottom: 5px;
-  background-color: #f9f9f9;
-}
-
-.word-texts {
-  font-size: 1.1em;
-}
-
-.word-buttons button {
-  padding: 5px 10px;
-  margin-left: 5px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.word-buttons .editBtn {
-  background-color: #ffc107;
-  color: black;
-}
-
-.word-buttons .editBtn:hover {
-  background-color: #e0a800;
-}
-
-.word-buttons .deleteBtn {
-  background-color: #dc3545;
-  color: white;
-}
-
-.word-buttons .deleteBtn:hover {
-  background-color: #a71d2a;
-}
-
-/* ----------------------
-   Success Message
----------------------- */
-#dictionary div.success-msg {
-  background-color: #28a745;
-  color: white;
-  padding: 10px 15px;
-  margin: 10px auto;
-  border-radius: 8px;
-  max-width: 400px;
-  text-align: center;
+  margin: 5px auto;
+  display: block;
   font-weight: bold;
 }
 
-/* ----------------------
-   Responsive Mobile
----------------------- */
-@media screen and (max-width: 600px) {
-  .add-word-container input, .search-container input {
-    width: 90%;
-    margin-bottom: 10px;
-  }
-
-  .word-entry {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .word-buttons {
-    margin-top: 5px;
-  }
+/* Welcome Box */
+.welcome-box {
+  background-color: #1E90FF;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  margin: 15px auto;
+  max-width: 600px;
+  text-align: center;
+  font-size: 1.1em;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
 }
 
+.welcome-box.show {
+  opacity: 1;
+}
 
+/* Search Section */
+.search-container input,
+.add-word-container input {
+  padding: 10px;
+  width: 250px;
+  margin: 5px auto;
+  display: block;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+  text-align: center;
+}
 
+.search-container button,
+.add-word-container button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #2b6cb0;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px auto;
+  display: block;
+}
+
+.search-container button:hover,
+.add-word-container button:hover {
+  background-color: #1e4e8c;
+}
+
+/* Dictionary Entries */
+.word-entry {
+  background-color: #eee;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.word-buttons button {
+  margin-left: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #ff6b6b;
+  color: #fff;
+}
+
+.word-buttons button:hover {
+  background-color: #e55050;
+}
+
+/* Add Word Section */
+.add-word-container {
+  margin: 20px 0;
+}
 
 
