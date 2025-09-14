@@ -6,12 +6,12 @@ body, html {
   font-family: Arial, sans-serif;
 }
 
-/* Outer background: 40% black, 60% blue */
+/* Outer background: black 40%, blue 60% */
 body {
   background: linear-gradient(
     120deg,
     black 40%,      
-    steelblue 100%  
+    steelblue 100%
   );
   display: flex;
   align-items: center;
