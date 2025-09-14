@@ -7,12 +7,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #000; /* Plain black background */
+  background: linear-gradient(
+    to bottom right,
+    rgba(0, 0, 0, 0.9) 40%,   /* Black 40% */
+    rgba(139, 69, 19, 0.9) 70%,  /* Brown 30% */
+    rgba(0, 0, 255, 0.9) 100%    /* Blue 30% */
+  );
 }
 
 /* Main container (the square box) */
 .container {
-  background-color: #fff;
+  background-color: #add8e6; /* Light blue */
   padding: 40px;
   border-radius: 15px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
