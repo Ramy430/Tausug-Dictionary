@@ -4,14 +4,32 @@ body {
   margin: 0;
   padding: 0;
 
-  /* Dark green/black gradient background for external surroundings */
-  background: linear-gradient(135deg, #001a00, #004d00);
+  /* Base greenish-blue gradient for the background */
+  background: linear-gradient(135deg, #2BC0E4, #00C851);
   background-size: 400% 400%;
   animation: waveBackground1 30s ease-in-out infinite;
   position: relative;
   overflow-x: hidden;
 }
 
+/* Moving overlay layer (60% black + 40% green) around content */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* 60% black */
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.6),
+      rgba(0, 200, 81, 0.4)
+    ); /* 60% black -> 40% green */
+  z-index: 0;
+  pointer-events: none; /* so it doesn’t block clicks */
+}
+
+/* Optional subtle wave animation for overlay */
 body::after {
   content: "";
   position: fixed;
@@ -19,11 +37,12 @@ body::after {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(225deg, #003300, #001a00);
+  background: linear-gradient(225deg, rgba(0, 200, 81, 0.4), rgba(43, 192, 228, 0.4));
   background-size: 400% 400%;
   animation: waveBackground2 45s ease-in-out infinite;
   z-index: 0;
-  opacity: 0.7;
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 /* Wave animations */
@@ -39,58 +58,16 @@ body::after {
   100% { background-position: 100% 50%; }
 }
 
-/* Container now transparent (no gray) */
+/* Container centered (transparent) */
 .container {
   position: relative;
-  z-index: 1;
+  z-index: 1; /* above background layers */
   max-width: 900px;
   margin: 50px auto;
-  padding: 40px 20px 60px 20px; /* space for waves */
+  padding: 40px 20px;
   text-align: center;
   border-radius: 15px;
-  /* Removed background-color and shadow */
-  overflow: visible; /* waves may overflow */
-}
-
-/* Bottom curved waves (optional still visible) */
-.container::after {
-  content: "";
-  position: absolute;
-  bottom: -20px;
-  left: 0;
-  width: 200%;
-  height: 60px;
-  background: rgba(43, 192, 228, 0.5);
-  border-radius: 45%;
-  transform: rotate(-5deg);
-  animation: waveMove 6s linear infinite;
-  z-index: 0;
-}
-
-.container::before {
-  content: "";
-  position: absolute;
-  bottom: -30px;
-  left: 0;
-  width: 200%;
-  height: 50px;
-  background: rgba(0, 200, 81, 0.5);
-  border-radius: 50%;
-  transform: rotate(3deg);
-  animation: waveMoveReverse 8s linear infinite;
-  z-index: 0;
-}
-
-@keyframes waveMove {
-  0% { transform: translateX(0) rotate(-5deg); }
-  50% { transform: translateX(-50px) rotate(-5deg); }
-  100% { transform: translateX(0) rotate(-5deg); }
-}
-
-@keyframes waveMoveReverse {
-  0% { transform: translateX(0) rotate(3deg); }
-  50% { transform: translateX(40px) rotate(3deg); }
-  100% { transform: translateX(0) rotate(3deg); }
+  /* removed gray background */
 }
 
 /* Header Section */
