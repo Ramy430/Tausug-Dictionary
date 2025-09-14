@@ -10,9 +10,9 @@ body, html {
 body {
   background: linear-gradient(
     120deg,
-    black 40%,
-    saddlebrown 70%,
-    steelblue 100%
+    black 40%,      /* 40% black */
+    steelblue 70%,  /* 30% blue */
+    steelblue 100%  /* 30% blue */
   );
   display: flex;
   align-items: center;
@@ -95,3 +95,5 @@ h2 {
   border-radius: 6px;
   cursor: pointer;
 }
+
+
