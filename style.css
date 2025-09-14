@@ -5,33 +5,12 @@ body, html {
   font-family: 'Arial', sans-serif;
   height: 100%;
   overflow-x: hidden;
-  background: url('sea.jpg') repeat-x;
-  background-size: cover;
-  animation: seaWave 60s linear infinite;
+  background-color: #808080;  /* Gray background */
+  position: relative;
+  color: #fff;
 }
 
-/* ---------------- Sea Wave Animation ---------------- */
-@keyframes seaWave {
-  0% { background-position: 0 0; }
-  25% { background-position: 250px 3px; }
-  50% { background-position: 500px -2px; }
-  75% { background-position: 750px 3px; }
-  100% { background-position: 1000px 0px; }
-}
-
-/* ---------------- Island Overlay ---------------- */
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('islands.png') no-repeat center top;
-  background-size: contain;
-  pointer-events: none;
-  opacity: 0.8;
-}
+/* Remove seaWave animation and island overlay since background is now gray */
 
 /* ---------------- Container ---------------- */
 .container {
@@ -39,22 +18,21 @@ body::after {
   margin: 0 auto;
   padding: 20px;
   text-align: center;
-  color: #fff;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 /* ---------------- Header ---------------- */
 h1 {
   font-size: 3em;
   margin-bottom: 0.2em;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+  color: #1E90FF;  /* Blue text */
 }
 
 .subheader {
   font-size: 1.2em;
   margin-bottom: 1em;
-  color: #ffe;
+  color: #1E90FF;  /* Blue text */
 }
 
 /* ---------------- Auth Section ---------------- */
@@ -66,7 +44,7 @@ h1 {
 #auth-section button {
   padding: 10px 20px;
   border: none;
-  background: #2b6cb0;
+  background: #1E90FF;  /* Matching blue theme */
   color: #fff;
   border-radius: 8px;
   cursor: pointer;
@@ -75,7 +53,7 @@ h1 {
 }
 
 #auth-section button:hover {
-  background: #1e4e8c;
+  background: #104E8B; /* Darker blue on hover */
 }
 
 /* ---------------- Welcome ---------------- */
@@ -93,19 +71,21 @@ h1 {
   border-radius: 8px;
   border: none;
   margin-right: 5px;
+  background-color: #b0b0b0;  /* light gray input */
+  color: #000;
 }
 
 .search-container button {
   padding: 10px 20px;
   border-radius: 8px;
   border: none;
-  background: #2b6cb0;
+  background: #1E90FF;
   color: #fff;
   cursor: pointer;
 }
 
 .search-container button:hover {
-  background: #1e4e8c;
+  background: #104E8B;
 }
 
 /* ---------------- Add Word ---------------- */
@@ -115,6 +95,8 @@ h1 {
   border-radius: 8px;
   border: none;
   width: 200px;
+  background-color: #b0b0b0; /* light gray */
+  color: #000;
 }
 
 .add-word-container button {
@@ -133,14 +115,13 @@ h1 {
 
 /* ---------------- Dictionary Entries ---------------- */
 .word-entry {
-  background: rgba(255,255,255,0.1);
+  background: #a0a0a0;  /* gray cards */
   padding: 12px 15px;
   margin: 10px auto;
   border-radius: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  backdrop-filter: blur(6px);
   box-shadow: 0 8px 15px rgba(0,0,0,0.3);
   transition: transform 0.5s, box-shadow 0.5s;
   animation: float 4s ease-in-out infinite;
@@ -151,7 +132,7 @@ h1 {
   box-shadow: 0 12px 20px rgba(0,0,0,0.5);
 }
 
-/* Floating with horizontal sway and scale */
+/* Floating animation with horizontal sway and scale */
 @keyframes float {
   0% { transform: translate(0px,0px) scale(1); }
   25% { transform: translate(-3px,-4px) scale(1.02); }
@@ -163,6 +144,7 @@ h1 {
 /* ---------------- Word Texts ---------------- */
 .word-texts {
   font-size: 1.2em;
+  color: #fff;
 }
 
 /* ---------------- Word Buttons ---------------- */
@@ -198,4 +180,3 @@ h1 {
     margin-top: 8px;
   }
 }
-
