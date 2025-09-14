@@ -2,13 +2,12 @@
 // Firebase Configuration
 // ----------------------
 const firebaseConfig = {
-  apiKey: "AIzaSyCgAEuD8F41dH5nUeoVxMot4-rTp4olmr8",
-  authDomain: "tausug-dictionary-online.firebaseapp.com",
-  projectId: "tausug-dictionary-online",
-  storageBucket: "tausug-dictionary-online.firebasestorage.app",
-  messagingSenderId: "919499038754",
-  appId: "1:919499038754:web:051037787db5a6123c2a7b",
-  measurementId: "G-LBKT0624FT"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 
 // Initialize Firebase
@@ -17,13 +16,11 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 
 // ----------------------
-// Admin UID (replace with your UID from Firebase console)
+// Admin UID (set here)
 // ----------------------
-let ADMIN_UID = "YOUR_ADMIN_UID"; // Replace this after login
+let ADMIN_UID = ""; // Will be detected automatically after login
 
-// ----------------------
 // DOM Elements
-// ----------------------
 const dictionaryContainer = document.getElementById('dictionary');
 const searchInput = document.getElementById('search');
 const searchBtn = document.getElementById('searchBtn');
@@ -34,25 +31,12 @@ const loginBtn = document.getElementById('loginBtn');
 const logoutBtn = document.getElementById('logoutBtn');
 const welcomeMessage = document.getElementById('welcomeMessage');
 
-// ----------------------
-// Old Dictionary Entries
-// ----------------------
+// Old Dictionary Data
 const oldDictionaryData = [
   { tausug: "buli'", english: "gluteus" },
   { tausug: "unud bi'tis", english: "calf muscle" },
-  { tausug: "unud duwa-ow", english: "biceps muscle (2 heads)" },
   { tausug: "Lasa", english: "Love" },
-  { tausug: "Itum", english: "Black" },
-  { tausug: "Jantung", english: "Heart" },
-  { tausug: "buhok", english: "hair" },
-  { tausug: "pais", english: "skin" },
-  { tausug: "mata", english: "eye" },
-  { tausug: "taynga", english: "ear" },
-  { tausug: "simod", english: "mouth" },
-  { tausug: "labbi'", english: "lip" },
-  { tausug: "ipun", english: "tooth" },
-  { tausug: "manga ipon", english: "teeth" },
-  { tausug: "bilateral", english: "duwa, kaduwa" }
+  { tausug: "Itum", english: "Black" }
 ];
 
 // ----------------------
@@ -70,14 +54,14 @@ logoutBtn.addEventListener('click', async () => {
 
 auth.onAuthStateChanged(user => {
   if (user) {
-    console.log("Your UID is:", user.uid); // Copy this UID to ADMIN_UID
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline";
     welcomeMessage.textContent = "Welcome! Assalaamu Alykum, " + user.displayName;
 
-    // Import old dictionary if empty
-    importOldDictionary();
+    // Set ADMIN_UID (replace with your Firebase UID)
+    ADMIN_UID = "YOUR_ADMIN_UID";
 
+    importOldDictionary();
     loadDictionary();
   } else {
     loginBtn.style.display = "inline";
@@ -87,29 +71,17 @@ auth.onAuthStateChanged(user => {
   }
 });
 
-// ----------------------
 // Import Old Dictionary
-// ----------------------
 async function importOldDictionary() {
-  try {
-    const snapshot = await db.collection('TausugDictionary').get();
-    if (snapshot.empty) {
-      for (let entry of oldDictionaryData) {
-        await db.collection('TausugDictionary').add(entry);
-        console.log(`Imported: ${entry.tausug} - ${entry.english}`);
-      }
-      console.log("Old dictionary imported successfully!");
-    } else {
-      console.log("Dictionary already has data. Import skipped.");
+  const snapshot = await db.collection('TausugDictionary').get();
+  if (snapshot.empty) {
+    for (let entry of oldDictionaryData) {
+      await db.collection('TausugDictionary').add(entry);
     }
-  } catch (error) {
-    console.error("Error importing dictionary:", error);
   }
 }
 
-// ----------------------
-// Load Dictionary (real-time)
-// ----------------------
+// Load Dictionary
 function loadDictionary() {
   db.collection('TausugDictionary').orderBy('tausug').onSnapshot(snapshot => {
     dictionaryContainer.innerHTML = "";
@@ -117,17 +89,22 @@ function loadDictionary() {
       const entry = doc.data();
       const div = document.createElement('div');
       div.className = 'word-entry';
+
+      let adminButtons = "";
+      if (auth.currentUser && auth.currentUser.uid === ADMIN_UID) {
+        adminButtons = `
+          <div class="word-buttons">
+            <button class="editBtn">Edit</button>
+            <button class="deleteBtn">Delete</button>
+          </div>
+        `;
+      }
+
       div.innerHTML = `
-        <div class="word-texts">
-          <span class="tausug">${entry.tausug}</span> - 
-          <span class="english">${entry.english}</span>
-        </div>
-        <div class="word-buttons">
-          ${auth.currentUser && auth.currentUser.uid === ADMIN_UID ? '<button class="editBtn">Edit</button><button class="deleteBtn">Delete</button>' : ''}
-        </div>
+        <span class="tausug">${entry.tausug}</span> - <span class="english">${entry.english}</span>
+        ${adminButtons}
       `;
 
-      // Admin edit/delete
       if (auth.currentUser && auth.currentUser.uid === ADMIN_UID) {
         div.querySelector('.editBtn').addEventListener('click', async () => {
           const newT = prompt("Edit Tausug word:", entry.tausug);
@@ -136,8 +113,11 @@ function loadDictionary() {
             await db.collection('TausugDictionary').doc(doc.id).update({ tausug: newT, english: newE });
           }
         });
+
         div.querySelector('.deleteBtn').addEventListener('click', async () => {
-          await db.collection('TausugDictionary').doc(doc.id).delete();
+          if (confirm("Are you sure you want to delete this word?")) {
+            await db.collection('TausugDictionary').doc(doc.id).delete();
+          }
         });
       }
 
@@ -146,62 +126,11 @@ function loadDictionary() {
   });
 }
 
-// ----------------------
-// Add New Word with Success Message
-// ----------------------
+// Add New Word
 addWordBtn.addEventListener('click', async () => {
   if (!auth.currentUser) return alert("Please login first!");
-
+  if (auth.currentUser.uid !== ADMIN_UID) return alert("Only admin can add words!");
   const tausug = newTausug.value.trim();
   const english = newEnglish.value.trim();
-  if (!tausug || !english) return alert("Please enter both Tausug and English words.");
-
-  try {
-    await db.collection('TausugDictionary').add({ tausug, english });
-    
-    // Clear input fields
-    newTausug.value = "";
-    newEnglish.value = "";
-
-    // Show success message
-    const msg = document.createElement('div');
-    msg.textContent = `Word "${tausug} - ${english}" added successfully!`;
-    msg.style.backgroundColor = "#28a745";
-    msg.style.color = "white";
-    msg.style.padding = "10px 15px";
-    msg.style.margin = "10px auto";
-    msg.style.borderRadius = "8px";
-    msg.style.maxWidth = "400px";
-    msg.style.textAlign = "center";
-    msg.style.fontWeight = "bold";
-    dictionaryContainer.prepend(msg);
-
-    // Fade out message after 3 seconds
-    setTimeout(() => {
-      msg.remove();
-    }, 3000);
-
-  } catch (error) {
-    console.error("Error adding word:", error);
-    alert("Failed to add word. Check console for details.");
-  }
-});
-
-// ----------------------
-// Search Dictionary
-// ----------------------
-searchBtn.addEventListener('click', async () => {
-  const term = searchInput.value.trim().toLowerCase();
-  const snapshot = await db.collection('TausugDictionary').get();
-  dictionaryContainer.innerHTML = "";
-  snapshot.forEach(doc => {
-    const entry = doc.data();
-    if (entry.tausug.toLowerCase().includes(term) || entry.english.toLowerCase().includes(term)) {
-      const div = document.createElement('div');
-      div.className = 'word-entry';
-      div.innerHTML = `<span class="tausug">${entry.tausug}</span> - <span class="english">${entry.english}</span>`;
-      dictionaryContainer.appendChild(div);
-    }
-  });
-});
-
+  if (!tausug || !english) return;
+  await db.collection('Taus
