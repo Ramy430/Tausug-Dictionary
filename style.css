@@ -1,79 +1,97 @@
-/* General page styling */
-body {
-  font-family: Arial, sans-serif;
+/* Reset */
+body, html {
   margin: 0;
   padding: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* Outer background */
+body {
   background: linear-gradient(
-    to bottom right,
-    rgba(0, 0, 0, 0.9) 40%,   /* Black 40% */
-    rgba(139, 69, 19, 0.9) 70%,  /* Brown 30% */
-    rgba(0, 0, 255, 0.9) 100%    /* Blue 30% */
+    120deg,
+    black 40%,
+    saddlebrown 70%,
+    steelblue 100%
   );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
-/* Main container (the square box) */
+/* Center container (square) */
 .container {
-  background-color: #add8e6; /* Light blue */
-  padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  background-color: lightblue; /* Square stays light blue */
+  padding: 30px;
+  border-radius: 12px;
   text-align: center;
-  width: 400px;
-  max-width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 400px;
 }
 
-/* Headings */
+/* Title */
 h1 {
-  color: blue;
-  margin-bottom: 5px;
+  margin: 0;
+  font-size: 1.8rem;
+  color: #003366;
 }
 
 h2 {
-  color: blue;
-  margin-top: 0;
-  margin-bottom: 20px;
+  margin: 10px 0 20px;
+  font-size: 1rem;
+  color: #003366;
 }
 
-/* Login button */
+/* Login Button */
 .login {
+  background-color: #1e90ff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
   margin-bottom: 20px;
-  padding: 10px 20px;
-  background-color: green;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-.login:hover {
-  background-color: darkgreen;
+/* Search Section */
+.search-container {
+  margin-bottom: 20px;
 }
 
-/* Input fields */
-input[type="text"] {
-  width: calc(100% - 20px);
+.search-container input {
   padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #aaa;
-  border-radius: 5px;
+  width: 70%;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
-/* Add Word button */
-button {
-  padding: 10px 20px;
-  background-color: blue;
-  color: white;
+.search-container button {
+  padding: 10px 15px;
+  margin-left: 5px;
   border: none;
-  border-radius: 5px;
+  background-color: #1e90ff;
+  color: white;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-button:hover {
-  background-color: darkblue;
+/* Add Word Section */
+.add-word-container input {
+  display: block;
+  width: calc(100% - 20px);
+  margin: 8px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
-
+.add-word-container button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #1e90ff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
