@@ -1,145 +1,74 @@
-/* General Styles */
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 
-  /* Multi-color background for external surroundings */
+  /* Gradient mix for surroundings */
   background: linear-gradient(
-    to bottom right,
-    rgba(0,0,0,1) 0%,       /* black 30% */
-    rgba(139,69,19,1) 30%,   /* brown 30% */
-    rgba(255,192,203,1) 60%, /* pink 20% */
-    rgba(128,128,128,1) 80%  /* gray 20% */
+    135deg,
+    black 40%,
+    saddlebrown 70%,
+    pink 90%,
+    red 95%,
+    gray 100%
   );
-  background-size: cover;
 }
 
-/* Container centered with gray background (the square) */
+/* Container (the square) */
 .container {
-  position: relative;
-  z-index: 1;
-  max-width: 900px;
-  margin: 50px auto;
-  padding: 40px 20px;
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
   text-align: center;
-  background-color: #ccc; /* gray square */
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  overflow: hidden;
+  width: 400px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Header Section */
-.header-section h1,
-.header-section .subheader {
-  display: block;
-  margin: 10px auto;
+/* Titles */
+h1, h2 {
+  margin: 0 0 10px;
+  color: blue;
 }
 
-/* Highlight text for headers and login button */
-.highlight-text {
-  color: #fff;
-  font-weight: bold;
-  padding: 2px 6px;
-  background-color: #1E90FF; /* blue highlight */
-  border-radius: 5px;
-}
-
-/* Auth Section */
-#auth-section {
-  text-align: center;
-  margin: 15px auto;
-}
-
-#auth-section button {
-  background-color: #1E90FF;
-  color: white;
+/* Login button */
+.login-btn {
+  margin-bottom: 20px;
   padding: 10px 20px;
+  background: blue;
+  color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin: 5px auto;
-  display: block;
-  font-weight: bold;
+  font-size: 16px;
 }
 
-/* Welcome Box */
-.welcome-box {
-  background-color: #1E90FF;
+.login-btn:hover {
+  background: darkblue;
+}
+
+/* Input fields */
+input {
+  padding: 10px;
+  width: calc(100% - 20px);
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Buttons */
+button {
+  padding: 10px 20px;
+  background: green;
   color: white;
-  padding: 12px 20px;
-  border-radius: 10px;
-  margin: 15px auto;
-  max-width: 600px;
-  text-align: center;
-  font-size: 1.1em;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
-
-.welcome-box.show {
-  opacity: 1;
-}
-
-/* Search Section */
-.search-container input,
-.add-word-container input {
-  padding: 10px;
-  width: 250px;
-  margin: 5px auto;
-  display: block;
-  border-radius: 5px;
-  border: 1px solid #aaa;
-  text-align: center;
-}
-
-.search-container button,
-.add-word-container button {
-  padding: 10px 15px;
   border: none;
-  background-color: #2b6cb0;
-  color: #fff;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  margin: 10px auto;
-  display: block;
 }
 
-.search-container button:hover,
-.add-word-container button:hover {
-  background-color: #1e4e8c;
+button:hover {
+  background: darkgreen;
 }
-
-/* Dictionary Entries */
-.word-entry {
-  background-color: #eee;
-  margin: 8px 0;
-  padding: 10px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.word-buttons button {
-  margin-left: 5px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #ff6b6b;
-  color: #fff;
-}
-
-.word-buttons button:hover {
-  background-color: #e55050;
-}
-
-/* Add Word Section */
-.add-word-container {
-  margin: 20px 0;
-}
-
-
-
-
 
