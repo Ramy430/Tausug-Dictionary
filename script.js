@@ -17,9 +17,9 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 
 // ----------------------
-// Admin UID
+// Admin UID (replace with your UID from Firebase console)
 // ----------------------
-let ADMIN_UID = "YOUR_ADMIN_UID"; // Replace with your Firebase UID
+let ADMIN_UID = "YOUR_ADMIN_UID"; // Replace this after login
 
 // ----------------------
 // DOM Elements
@@ -35,7 +35,7 @@ const logoutBtn = document.getElementById('logoutBtn');
 const welcomeMessage = document.getElementById('welcomeMessage');
 
 // ----------------------
-// Old Dictionary Data
+// Old Dictionary Entries
 // ----------------------
 const oldDictionaryData = [
   { tausug: "buli'", english: "gluteus" },
@@ -56,15 +56,6 @@ const oldDictionaryData = [
 ];
 
 // ----------------------
-// Animate header green highlight
-// ----------------------
-window.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.highlight-text').forEach(el => {
-    setTimeout(() => el.classList.add('loaded'), 200);
-  });
-});
-
-// ----------------------
 // Authentication
 // ----------------------
 loginBtn.addEventListener('click', async () => {
@@ -77,27 +68,21 @@ logoutBtn.addEventListener('click', async () => {
   await auth.signOut();
 });
 
-// ----------------------
-// Auth State Changed
-// ----------------------
 auth.onAuthStateChanged(user => {
   if (user) {
+    console.log("Your UID is:", user.uid); // Copy this UID to ADMIN_UID
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline";
-    // Show welcome message with fade-in
-    welcomeMessage.textContent = `Welcome! Assalaamu Alykum, ${user.displayName}`;
-    welcomeMessage.classList.add("show");
+    welcomeMessage.textContent = "Welcome! Assalaamu Alykum, " + user.displayName;
 
+    // Import old dictionary if empty
     importOldDictionary();
+
     loadDictionary();
   } else {
     loginBtn.style.display = "inline";
     logoutBtn.style.display = "none";
-
-    // Fade out welcome message
-    welcomeMessage.classList.remove("show");
-    setTimeout(() => welcomeMessage.textContent = "", 1000);
-
+    welcomeMessage.textContent = "";
     dictionaryContainer.innerHTML = "";
   }
 });
@@ -106,16 +91,24 @@ auth.onAuthStateChanged(user => {
 // Import Old Dictionary
 // ----------------------
 async function importOldDictionary() {
-  const snapshot = await db.collection('TausugDictionary').get();
-  if (snapshot.empty) {
-    for (let entry of oldDictionaryData) {
-      await db.collection('TausugDictionary').add(entry);
+  try {
+    const snapshot = await db.collection('TausugDictionary').get();
+    if (snapshot.empty) {
+      for (let entry of oldDictionaryData) {
+        await db.collection('TausugDictionary').add(entry);
+        console.log(`Imported: ${entry.tausug} - ${entry.english}`);
+      }
+      console.log("Old dictionary imported successfully!");
+    } else {
+      console.log("Dictionary already has data. Import skipped.");
     }
+  } catch (error) {
+    console.error("Error importing dictionary:", error);
   }
 }
 
 // ----------------------
-// Load Dictionary
+// Load Dictionary (real-time)
 // ----------------------
 function loadDictionary() {
   db.collection('TausugDictionary').orderBy('tausug').onSnapshot(snapshot => {
@@ -134,7 +127,7 @@ function loadDictionary() {
         </div>
       `;
 
-      // Edit/Delete buttons (admin only)
+      // Admin edit/delete
       if (auth.currentUser && auth.currentUser.uid === ADMIN_UID) {
         div.querySelector('.editBtn').addEventListener('click', async () => {
           const newT = prompt("Edit Tausug word:", entry.tausug);
@@ -143,7 +136,6 @@ function loadDictionary() {
             await db.collection('TausugDictionary').doc(doc.id).update({ tausug: newT, english: newE });
           }
         });
-
         div.querySelector('.deleteBtn').addEventListener('click', async () => {
           await db.collection('TausugDictionary').doc(doc.id).delete();
         });
@@ -155,16 +147,44 @@ function loadDictionary() {
 }
 
 // ----------------------
-// Add New Word
+// Add New Word with Success Message
 // ----------------------
 addWordBtn.addEventListener('click', async () => {
   if (!auth.currentUser) return alert("Please login first!");
+
   const tausug = newTausug.value.trim();
   const english = newEnglish.value.trim();
-  if (!tausug || !english) return;
-  await db.collection('TausugDictionary').add({ tausug, english });
-  newTausug.value = "";
-  newEnglish.value = "";
+  if (!tausug || !english) return alert("Please enter both Tausug and English words.");
+
+  try {
+    await db.collection('TausugDictionary').add({ tausug, english });
+    
+    // Clear input fields
+    newTausug.value = "";
+    newEnglish.value = "";
+
+    // Show success message
+    const msg = document.createElement('div');
+    msg.textContent = `Word "${tausug} - ${english}" added successfully!`;
+    msg.style.backgroundColor = "#28a745";
+    msg.style.color = "white";
+    msg.style.padding = "10px 15px";
+    msg.style.margin = "10px auto";
+    msg.style.borderRadius = "8px";
+    msg.style.maxWidth = "400px";
+    msg.style.textAlign = "center";
+    msg.style.fontWeight = "bold";
+    dictionaryContainer.prepend(msg);
+
+    // Fade out message after 3 seconds
+    setTimeout(() => {
+      msg.remove();
+    }, 3000);
+
+  } catch (error) {
+    console.error("Error adding word:", error);
+    alert("Failed to add word. Check console for details.");
+  }
 });
 
 // ----------------------
@@ -184,3 +204,4 @@ searchBtn.addEventListener('click', async () => {
     }
   });
 });
+
