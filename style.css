@@ -1,162 +1,209 @@
-/* General Styles */
+/* ----------------------
+   General Body
+---------------------- */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  /* Animated dark green background */
-  background: linear-gradient(120deg, #006400, #004d00, #006400);
-  background-size: 600% 600%;
-  animation: backgroundWave 20s ease infinite;
+  background-color: #e0e0e0; /* gray surroundings */
+  display: flex;
+  justify-content: center;
 }
 
-/* Background Animation */
-@keyframes backgroundWave {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Container centered */
+/* ----------------------
+   Main Container
+---------------------- */
 .container {
-  max-width: 900px;
-  margin: 0 auto;
+  max-width: 800px;
+  width: 90%;
+  background-color: #ffffff;
   padding: 20px;
+  margin: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   text-align: center;
-  background-color: transparent;
 }
 
-/* Header Section */
-.header-section h1,
-.header-section .subheader {
-  display: block;
-  text-align: center;
-  margin: 10px auto;
-  text-shadow: 1px 1px 5px rgba(0,0,0,0.7); /* subtle glow */
+/* ----------------------
+   Titles & Headers
+---------------------- */
+h1 {
+  font-size: 2.5em;
+  color: green; /* title green */
+  margin-bottom: 10px;
 }
 
-/* Highlight text for headers and login button */
-.highlight-text {
-  color: #fff;
-  font-weight: bold;
-  padding: 2px 6px;
-  background-color: #1E90FF; /* blue highlight */
-  border-radius: 5px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.6); /* subtle shadow */
+.subheader {
+  font-size: 1.3em;
+  color: green; /* subheader green */
+  margin-bottom: 20px;
 }
 
-/* Auth Section (Login below Add Word) */
-#auth-section {
-  text-align: center;
-  margin: 15px auto;
+/* ----------------------
+   Search Section
+---------------------- */
+.search-container {
+  margin: 15px 0;
 }
 
-#auth-section button {
-  background-color: #1E90FF;
-  color: white;
+.search-container input {
+  padding: 10px;
+  width: 60%;
+  max-width: 400px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-right: 5px;
+}
+
+.search-container button {
   padding: 10px 20px;
   border: none;
+  background-color: #007BFF;
+  color: white;
   border-radius: 8px;
   cursor: pointer;
-  margin: 5px auto;
-  display: block;
-  font-weight: bold;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.6); /* make button text pop */
+  transition: background 0.3s;
 }
 
-/* Welcome Box */
-.welcome-box {
-  background-color: #1E90FF;
-  color: white;
-  padding: 12px 20px;
-  border-radius: 10px;
-  margin: 15px auto;
-  max-width: 600px;
-  text-align: center;
-  font-size: 1.1em;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+.search-container button:hover {
+  background-color: #0056b3;
 }
 
-.welcome-box.show {
-  opacity: 1;
-}
-
-/* Search Section */
-.search-container input,
-.add-word-container input {
-  padding: 10px;
-  width: 250px;
-  margin: 5px auto;
-  display: block;
-  border-radius: 5px;
-  border: 1px solid #aaa;
-  text-align: center;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-
-.search-container button,
-.add-word-container button {
-  padding: 10px 15px;
-  border: none;
-  background-color: #2b6cb0;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 10px auto;
-  display: block;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-
-.search-container button:hover,
-.add-word-container button:hover {
-  background-color: #1e4e8c;
-}
-
-/* Dictionary Entries */
-.word-entry {
-  background-color: #eee;
-  margin: 8px 0;
-  padding: 10px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.word-buttons button {
-  margin-left: 5px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #ff6b6b;
-  color: #fff;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-
-.word-buttons button:hover {
-  background-color: #e55050;
-}
-
-/* Add Word Section */
+/* ----------------------
+   Add Word Section
+---------------------- */
 .add-word-container {
   margin: 20px 0;
 }
 
-/* --- MOBILE RESPONSIVENESS --- */
-@media (max-width: 600px) {
-  .search-container input,
-  .add-word-container input {
-    width: 90%;
-  }
-
-  .search-container button,
-  .add-word-container button,
-  #auth-section button {
-    width: 90%;
-  }
+.add-word-container input {
+  padding: 10px;
+  width: 45%;
+  max-width: 300px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin: 5px 5px 5px 0;
 }
 
+.add-word-container button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: background 0.3s;
+}
+
+.add-word-container button:hover {
+  background-color: #1e7e34;
+}
+
+/* ----------------------
+   Login Section
+---------------------- */
+#auth-section {
+  margin: 15px 0;
+}
+
+#auth-section button {
+  padding: 10px 20px;
+  border: none;
+  background-color: green;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 5px;
+  transition: background 0.3s ease;
+}
+
+#auth-section button:hover {
+  background-color: darkgreen;
+}
+
+/* ----------------------
+   Dictionary Display
+---------------------- */
+#dictionary {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.word-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  background-color: #f9f9f9;
+}
+
+.word-texts {
+  font-size: 1.1em;
+}
+
+.word-buttons button {
+  padding: 5px 10px;
+  margin-left: 5px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.word-buttons .editBtn {
+  background-color: #ffc107;
+  color: black;
+}
+
+.word-buttons .editBtn:hover {
+  background-color: #e0a800;
+}
+
+.word-buttons .deleteBtn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.word-buttons .deleteBtn:hover {
+  background-color: #a71d2a;
+}
+
+/* ----------------------
+   Success Message
+---------------------- */
+#dictionary div.success-msg {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  margin: 10px auto;
+  border-radius: 8px;
+  max-width: 400px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* ----------------------
+   Responsive Mobile
+---------------------- */
+@media screen and (max-width: 600px) {
+  .add-word-container input, .search-container input {
+    width: 90%;
+    margin-bottom: 10px;
+  }
+
+  .word-entry {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .word-buttons {
+    margin-top: 5px;
+  }
+}
 
 
 
