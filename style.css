@@ -4,70 +4,33 @@ body {
   margin: 0;
   padding: 0;
 
-  /* Base greenish-blue gradient for the background */
-  background: linear-gradient(135deg, #2BC0E4, #00C851);
-  background-size: 400% 400%;
-  animation: waveBackground1 30s ease-in-out infinite;
-  position: relative;
-  overflow-x: hidden;
-}
-
-/* Moving overlay layer (60% black + 40% green) around content */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6); /* 60% black */
+  /* Multi-colored background surrounding content */
   background: linear-gradient(
-      rgba(0, 0, 0, 0.6),
-      rgba(0, 200, 81, 0.4)
-    ); /* 60% black -> 40% green */
-  z-index: 0;
-  pointer-events: none; /* so it doesn’t block clicks */
-}
-
-/* Optional subtle wave animation for overlay */
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(225deg, rgba(0, 200, 81, 0.4), rgba(43, 192, 228, 0.4));
-  background-size: 400% 400%;
-  animation: waveBackground2 45s ease-in-out infinite;
-  z-index: 0;
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-/* Wave animations */
-@keyframes waveBackground1 {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes waveBackground2 {
-  0% { background-position: 100% 50%; }
-  50% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-
-/* Container centered (transparent) */
-.container {
+    to bottom,
+    rgba(0,0,0,1) 0% 30%,       /* 30% black */
+    rgba(0,200,81,1) 30% 60%,   /* 30% green */
+    rgba(255,192,203,1) 60% 80%,/* 20% pink */
+    rgba(192,192,192,1) 80% 100%/* 20% gray */
+  );
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   position: relative;
-  z-index: 1; /* above background layers */
+}
+
+/* Container removed background (transparent now) */
+.container {
   max-width: 900px;
-  margin: 50px auto;
-  padding: 40px 20px;
+  width: 90%;
+  padding: 20px;
   text-align: center;
   border-radius: 15px;
-  /* removed gray background */
+  /* No background color */
+  position: relative;
+  z-index: 1;
 }
 
 /* Header Section */
@@ -75,9 +38,10 @@ body::after {
 .header-section .subheader {
   display: block;
   margin: 10px auto;
+  color: #1E90FF; /* blue text */
 }
 
-/* Highlight text for headers and login button */
+/* Highlight text for login button */
 .highlight-text {
   color: #fff;
   font-weight: bold;
@@ -153,7 +117,7 @@ body::after {
 
 /* Dictionary Entries */
 .word-entry {
-  background-color: #eee;
+  background-color: rgba(255,255,255,0.8); /* semi-transparent white */
   margin: 8px 0;
   padding: 10px;
   border-radius: 5px;
