@@ -1,0 +1,201 @@
+/* ---------------- General Body ---------------- */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  height: 100%;
+  overflow-x: hidden;
+  background: url('sea.jpg') repeat-x;
+  background-size: cover;
+  animation: seaWave 60s linear infinite;
+}
+
+/* ---------------- Sea Wave Animation ---------------- */
+@keyframes seaWave {
+  0% { background-position: 0 0; }
+  25% { background-position: 250px 3px; }
+  50% { background-position: 500px -2px; }
+  75% { background-position: 750px 3px; }
+  100% { background-position: 1000px 0px; }
+}
+
+/* ---------------- Island Overlay ---------------- */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('islands.png') no-repeat center top;
+  background-size: contain;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+/* ---------------- Container ---------------- */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------------- Header ---------------- */
+h1 {
+  font-size: 3em;
+  margin-bottom: 0.2em;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+
+.subheader {
+  font-size: 1.2em;
+  margin-bottom: 1em;
+  color: #ffe;
+}
+
+/* ---------------- Auth Section ---------------- */
+#auth-section {
+  margin: 20px auto;
+  text-align: center;
+}
+
+#auth-section button {
+  padding: 10px 20px;
+  border: none;
+  background: #2b6cb0;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 5px;
+  transition: background 0.3s ease;
+}
+
+#auth-section button:hover {
+  background: #1e4e8c;
+}
+
+/* ---------------- Welcome ---------------- */
+#welcomeMessage {
+  margin: 10px 0;
+  font-size: 1.1em;
+  color: #fffa;
+}
+
+/* ---------------- Search ---------------- */
+.search-container input {
+  padding: 10px;
+  width: 60%;
+  max-width: 400px;
+  border-radius: 8px;
+  border: none;
+  margin-right: 5px;
+}
+
+.search-container button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #2b6cb0;
+  color: #fff;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background: #1e4e8c;
+}
+
+/* ---------------- Add Word ---------------- */
+.add-word-container input {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 8px;
+  border: none;
+  width: 200px;
+}
+
+.add-word-container button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #38a169;
+  color: #fff;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.add-word-container button:hover {
+  background: #2f855a;
+}
+
+/* ---------------- Dictionary Entries ---------------- */
+.word-entry {
+  background: rgba(255,255,255,0.1);
+  padding: 12px 15px;
+  margin: 10px auto;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+  transition: transform 0.5s, box-shadow 0.5s;
+  animation: float 4s ease-in-out infinite;
+}
+
+.word-entry:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.5);
+}
+
+/* Floating with horizontal sway and scale */
+@keyframes float {
+  0% { transform: translate(0px,0px) scale(1); }
+  25% { transform: translate(-3px,-4px) scale(1.02); }
+  50% { transform: translate(0px,-6px) scale(1.04); }
+  75% { transform: translate(3px,-4px) scale(1.02); }
+  100% { transform: translate(0px,0px) scale(1); }
+}
+
+/* ---------------- Word Texts ---------------- */
+.word-texts {
+  font-size: 1.2em;
+}
+
+/* ---------------- Word Buttons ---------------- */
+.word-buttons button {
+  padding: 5px 10px;
+  margin-left: 5px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: #e53e3e;
+  color: #fff;
+  transition: background 0.3s;
+}
+
+.word-buttons button:hover {
+  background: #c53030;
+}
+
+/* ---------------- Responsive ---------------- */
+@media(max-width: 600px){
+  .search-container input {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .add-word-container input {
+    width: 100%;
+  }
+  .word-entry {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .word-buttons {
+    margin-top: 8px;
+  }
+}
+
