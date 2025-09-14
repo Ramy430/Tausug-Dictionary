@@ -125,6 +125,20 @@ body {
   margin: 20px 0;
 }
 
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 600px) {
+  .search-container input,
+  .add-word-container input {
+    width: 90%;
+  }
+
+  .search-container button,
+  .add-word-container button,
+  #auth-section button {
+    width: 90%;
+  }
+}
+
 
 
 
