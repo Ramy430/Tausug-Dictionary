@@ -1,157 +1,158 @@
-/* General reset */
+/* --- Page Background --- */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f4f6f9;
-  color: #333;
+  background: #0A1A3D; /* Dark blue */
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding: 20px;
+  align-items: center;
 }
 
+/* --- Container / Square --- */
 .container {
-  background: #fff;
-  padding: 20px 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 700px;
+  background-color: lightblue; /* keep your square color */
+  padding: 25px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  box-sizing: border-box;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
 }
 
+/* --- Headers --- */
 h1 {
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 5px;
+  color: green;
+  font-size: 2rem;
+  margin-bottom: 10px;
 }
 
 .subheader {
-  text-align: center;
-  font-size: 14px;
-  color: #666;
+  color: green;
+  font-size: 1rem;
   margin-bottom: 20px;
 }
 
-/* Auth buttons */
+/* --- Auth Section --- */
 #auth-section {
-  text-align: center;
-  margin-bottom: 15px;
+  margin: 15px 0;
 }
 
 #auth-section button {
-  padding: 8px 16px;
-  margin: 5px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 8px;
-  background: #3498db;
+  background: green;
   color: white;
+  border-radius: 8px;
+  margin: 5px;
   cursor: pointer;
-  font-size: 14px;
-  transition: background 0.2s ease-in-out;
+  font-size: 1rem;
 }
 
 #auth-section button:hover {
-  background: #2980b9;
+  background: darkgreen;
 }
 
-/* Welcome message */
+/* --- Welcome Message --- */
 #welcomeMessage {
-  text-align: center;
-  font-size: 15px;
-  margin-bottom: 15px;
-  font-weight: bold;
-  color: #2c3e50;
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #0A3D62;
 }
 
-/* Search */
+/* --- Search Section --- */
 .search-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+  margin: 15px 0;
 }
 
 .search-container input {
-  flex: 1;
   padding: 10px;
-  border-radius: 8px 0 0 8px;
+  width: 65%;
+  margin-right: 5px;
+  border-radius: 5px;
   border: 1px solid #ccc;
-  outline: none;
+  font-size: 1rem;
 }
 
 .search-container button {
   padding: 10px 15px;
   border: none;
-  border-radius: 0 8px 8px 0;
-  background: #27ae60;
+  background: green;
   color: white;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background 0.2s ease-in-out;
+  font-size: 1rem;
 }
 
 .search-container button:hover {
-  background: #1e8449;
+  background: darkgreen;
 }
 
-/* Dictionary Display */
-#dictionary {
-  display: grid;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
+/* --- Dictionary Entries --- */
 .word-card {
-  background: #f9f9f9;
-  border: 1px solid #ddd;
-  padding: 12px;
-  border-radius: 8px;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #e6f7ff;
+  border-radius: 5px;
+  text-align: left;
+  font-size: 1rem;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
 }
 
-.word-card strong {
-  color: #2c3e50;
-}
-
-/* Add Word Section */
+/* --- Add Word Section --- */
 .add-word-container {
-  display: none; /* hidden by default for non-admin */
-  flex-direction: column;
-  gap: 10px;
+  margin: 15px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .add-word-container input {
   padding: 10px;
-  border-radius: 8px;
+  width: 40%;
+  margin: 5px;
+  border-radius: 5px;
   border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
 .add-word-container button {
-  padding: 10px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 8px;
-  background: #e67e22;
+  background: green;
   color: white;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 15px;
-  transition: background 0.2s ease-in-out;
+  font-size: 1rem;
 }
 
 .add-word-container button:hover {
-  background: #ca6f1e;
+  background: darkgreen;
 }
 
-/* Responsive */
+/* --- Responsive for Mobile --- */
 @media (max-width: 600px) {
   .container {
-    padding: 15px 20px;
+    width: 95%;
+    padding: 20px;
   }
-  .search-container {
-    flex-direction: column;
+
+  h1 {
+    font-size: 1.5rem;
   }
-  .search-container input,
-  .search-container button {
-    border-radius: 8px;
-    margin: 3px 0;
+
+  .subheader {
+    font-size: 0.9rem;
+  }
+
+  .search-container input {
+    width: 60%;
+  }
+
+  .add-word-container input {
+    width: 80%;
+    margin-bottom: 5px;
   }
 }
-
 
