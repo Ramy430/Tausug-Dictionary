@@ -5,13 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tausug-English Dictionary</title>
   <link rel="stylesheet" href="style.css">
-
-  <!-- Firebase App (required) -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <!-- Firebase Auth -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <!-- Firebase Firestore -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
   <div class="page-background">
@@ -21,12 +14,12 @@
 
       <!-- Auth Section -->
       <div id="auth-section">
-        <button id="loginBtn">Login</button>
-        <button id="logoutBtn" style="display:none;">Logout</button>
+        <button id="loginBtn">Login with Google</button>
+        <div id="user-info" style="display:none;">
+          <span id="welcomeMessage"></span>
+          <button id="logoutBtn">Logout</button>
+        </div>
       </div>
-
-      <!-- Welcome Message -->
-      <div id="welcomeMessage"></div>
 
       <!-- Search Section -->
       <div class="search-container">
@@ -38,7 +31,7 @@
       <div id="dictionary"></div>
 
       <!-- Add Word Section -->
-      <div class="add-word-container">
+      <div class="add-word-container" id="add-word-container">
         <input type="text" id="newTausug" placeholder="New Tausug word">
         <input type="text" id="newEnglish" placeholder="English translation">
         <button id="addWordBtn">Add Word</button>
@@ -46,7 +39,7 @@
     </div>
   </div>
 
-  <!-- Your Script -->
-  <script src="script.js"></script>
+  <!-- Modular App JS -->
+  <script type="module" src="app.js"></script>
 </body>
 </html>
