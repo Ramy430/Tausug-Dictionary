@@ -1,161 +1,140 @@
-/* -----------------------------
-   General Page Styles
------------------------------ */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to right, #3366cc 40%, #3399ff 30%, #33ccff 30%);
+/* --- Page Background --- */
+.page-background {
+  background: linear-gradient(to right, #4A90E2, #4A90E2); /* Blue surroundings */
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
+  align-items: center;
 }
 
-/* Container for the inner square */
+/* --- Container / Square --- */
 .container {
-  background-color: #add8e6; /* light blue square */
-  padding: 30px;
-  margin-top: 50px;
+  background-color: lightblue;
+  padding: 25px;
   border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
-  max-width: 500px;
   width: 90%;
+  max-width: 500px;
+  box-sizing: border-box;
   text-align: center;
 }
 
-/* Main Title */
+/* --- Headers --- */
 h1 {
-  font-size: 3em; /* Tausug-English Dictionary */
-  color: #008000; /* green */
+  color: green;
+  font-size: 2rem;
   margin-bottom: 10px;
 }
 
-/* Subheader */
 .subheader {
-  font-size: 1.5em; /* 1/2 of main title */
-  color: #006400;  /* stronger green */
+  color: green;
+  font-size: 1rem; /* Half of h1 */
   margin-bottom: 20px;
 }
 
-/* Auth Section */
+/* --- Auth Buttons --- */
 #auth-section {
-  margin: 20px 0;
+  margin: 15px 0;
 }
 
 #auth-section button {
   padding: 10px 20px;
   border: none;
-  background: #2b6cb0;
-  color: #fff;
+  background: green;
+  color: white;
   border-radius: 8px;
-  cursor: pointer;
   margin: 5px;
-  transition: background 0.3s ease;
+  cursor: pointer;
 }
 
 #auth-section button:hover {
-  background: #1e4e8c;
+  background: darkgreen;
 }
 
-/* Welcome Message */
+/* --- Welcome Message --- */
 #welcomeMessage {
-  font-size: 1.2em;
-  margin: 10px 0 20px 0;
-  color: #333;
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #0A3D62;
 }
 
-/* Search Section */
+/* --- Search Section --- */
 .search-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+  margin: 15px 0;
 }
 
 .search-container input {
-  padding: 10px;
-  width: 70%;
-  border-radius: 8px 0 0 8px;
+  padding: 8px;
+  width: 65%;
+  margin-right: 5px;
+  border-radius: 5px;
   border: 1px solid #ccc;
-  outline: none;
 }
 
 .search-container button {
-  padding: 10px 20px;
+  padding: 8px 15px;
   border: none;
-  background: #2b6cb0;
-  color: #fff;
-  border-radius: 0 8px 8px 0;
+  background: green;
+  color: white;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
 
 .search-container button:hover {
-  background: #1e4e8c;
+  background: darkgreen;
 }
 
-/* Dictionary Entries */
+/* --- Dictionary Entries --- */
 .word-entry {
+  margin: 10px 0;
+  padding: 5px;
+  background-color: #e6f7ff;
+  border-radius: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-  padding: 8px;
-  border-bottom: 1px solid #ccc;
 }
 
-.word-texts {
-  font-size: 1.1em;
-}
-
-/* Add Word Section */
-.add-word-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.add-word-container input {
-  padding: 10px;
-  width: 80%;
-  margin: 5px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  outline: none;
-}
-
-.add-word-container button {
-  padding: 10px 20px;
-  border: none;
-  background: #2b6cb0;
-  color: #fff;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.3s ease;
-}
-
-.add-word-container button:hover {
-  background: #1e4e8c;
-}
-
-/* Edit/Delete Buttons (Admin) */
 .word-buttons button {
   margin-left: 5px;
-  padding: 5px 10px;
+  padding: 3px 8px;
+  background-color: orange;
+  color: white;
   border: none;
-  background: #ff6347;
-  color: #fff;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .word-buttons button:hover {
-  background: #cc4c3c;
+  background-color: darkorange;
 }
 
-/* Responsive Mobile Adjustments */
+/* --- Add Word Section --- */
+.add-word-container {
+  margin: 15px 0;
+}
+
+.add-word-container input {
+  padding: 8px;
+  width: 40%;
+  margin: 5px 2px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.add-word-container button {
+  padding: 8px 15px;
+  border: none;
+  background: green;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-word-container button:hover {
+  background: darkgreen;
+}
+
+/* --- Responsive for Mobile --- */
 @media (max-width: 600px) {
   .container {
     width: 95%;
@@ -163,14 +142,19 @@ h1 {
   }
 
   h1 {
-    font-size: 2em;
+    font-size: 1.5rem;
   }
 
   .subheader {
-    font-size: 1em;
+    font-size: 0.75rem;
   }
 
   .search-container input {
     width: 60%;
+  }
+
+  .add-word-container input {
+    width: 80%;
+    margin-bottom: 5px;
   }
 }
