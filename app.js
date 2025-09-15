@@ -12,7 +12,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyCgAEuD8F41dH5nUeoVxMot4-rTp4olmr8",
   authDomain: "tausug-dictionary-online.firebaseapp.com",
   projectId: "tausug-dictionary-online",
-  storageBucket: "tausug-dictionary-online.firebasestorage.app",
+  storageBucket: "tausug-dictionary-online.appspot.com",
   messagingSenderId: "919499038754",
   appId: "1:919499038754:web:051037787db5a6123c2a7b",
   measurementId: "G-LBKT0624FT"
@@ -26,7 +26,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // ----------------------
-// Admin UID (replace with your actual UID after first login)
+// Admin UID (replace after first login)
 // ----------------------
 let ADMIN_UID = "YOUR_ADMIN_UID";
 
@@ -177,31 +177,4 @@ async function deleteWord(docId) {
 }
 
 // ----------------------
-// Edit Word (User)
-function editWord(docId, oldTausug, oldEnglish) {
-  const newT = prompt("Edit Tausug word:", oldTausug);
-  const newE = prompt("Edit English translation:", oldEnglish);
-  if (newT && newE) {
-    const docRef = doc(db, 'TausugDictionary', docId);
-    updateDoc(docRef, { tausug: newT, english: newE });
-  }
-}
-
-// ----------------------
-// Search
-// ----------------------
-searchBtn.addEventListener('click', async () => {
-  const term = searchInput.value.toLowerCase();
-  const snapshot = await getDocs(collection(db, 'TausugDictionary'));
-  dictionaryContainer.innerHTML = "";
-
-  snapshot.forEach(docSnap => {
-    const entry = docSnap.data();
-    if (entry.tausug.toLowerCase().includes(term) || entry.english.toLowerCase().includes(term)) {
-      const div = document.createElement('div');
-      div.className = "word-entry";
-      div.innerHTML = `<div>${entry.tausug} - ${entry.english} ${entry.status === 'pending' ? '(Pending)' : ''}</div>`;
-      dictionaryContainer.appendChild(div);
-    }
-  });
-});
+// Edit
