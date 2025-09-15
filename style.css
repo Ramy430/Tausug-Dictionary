@@ -1,124 +1,122 @@
-/* Full-page mostly blue background */
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  font-family: Arial, sans-serif;
-  background-color: #3a8edc; /* mostly blue external surroundings */
+/* External Background (mostly blue) */
+.page-background {
+  background: #4a90e2; /* mostly blue */
+  min-height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
-/* Container for all content */
+/* Inner Container / Square */
 .container {
-  text-align: center;
-  padding: 20px 40px;
-  margin-top: 30px;
+  background: #e0f7fa; /* light blue square */
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  max-width: 700px;
   width: 100%;
-  max-width: 800px;
-  box-sizing: border-box;
-  color: white;
+  text-align: center;
 }
 
-/* Headings */
-h1 {
-  font-size: 2.5em;
-  margin-bottom: 10px;
-  color: white;
+/* Titles and Headers */
+h1, .subheader {
+  color: #006064; /* greenish-blue text */
+  margin: 5px 0;
 }
 
-.subheader {
-  font-size: 1.2em;
-  margin-bottom: 20px;
-  color: white;
-}
-
-/* Auth Section */
-#auth-section {
-  margin: 20px auto;
-}
-
+/* Auth Section Buttons */
 #auth-section button {
   padding: 10px 20px;
-  border: none;
-  background: #1e4e8c;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
   margin: 5px;
-  transition: background 0.3s ease;
+  border: none;
+  border-radius: 8px;
+  background-color: #006064;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
 #auth-section button:hover {
-  background: #163b70;
+  background-color: #004d52;
 }
 
-/* Welcome message */
+/* Welcome Message */
 #welcomeMessage {
   margin: 10px 0;
-  font-size: 1.1em;
-  color: white;
+  font-size: 1.1rem;
+  color: #004d52;
 }
 
-/* Search Section */
-.search-container {
-  margin: 20px 0;
-}
-
+/* Search */
 .search-container input {
   padding: 10px;
-  width: 250px;
+  width: 60%;
   border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-right: 10px;
+  border: 1px solid #006064;
+  margin-right: 5px;
 }
 
 .search-container button {
   padding: 10px 20px;
   border: none;
+  background-color: #006064;
+  color: #fff;
   border-radius: 8px;
-  background-color: #1e4e8c;
-  color: white;
   cursor: pointer;
 }
 
-/* Dictionary entries */
-#dictionary {
-  margin: 20px 0;
-}
-
-.word-entry {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.3);
-}
-
-.word-buttons button {
-  margin-left: 5px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #1e4e8c;
-  color: white;
-  cursor: pointer;
+.search-container button:hover {
+  background-color: #004d52;
 }
 
 /* Add Word Section */
 .add-word-container input {
   padding: 10px;
-  margin: 5px;
+  margin: 5px 0;
+  width: 45%;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #006064;
 }
 
 .add-word-container button {
   padding: 10px 20px;
   border: none;
+  background-color: #006064;
+  color: #fff;
   border-radius: 8px;
-  background-color: #1e4e8c;
-  color: white;
   cursor: pointer;
-  margin-top: 10px;
+}
+
+.add-word-container button:hover {
+  background-color: #004d52;
+}
+
+/* Dictionary Entries */
+.word-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #b2ebf2; /* slightly lighter blue inside square */
+  margin: 5px 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.word-texts span {
+  color: #004d52;
+}
+
+.word-buttons button {
+  margin-left: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  background-color: #006064;
+  color: #fff;
+  cursor: pointer;
+}
+
+.word-buttons button:hover {
+  background-color: #004d52;
 }
