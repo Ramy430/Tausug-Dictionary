@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tausug-English Dictionary</title>
   <link rel="stylesheet" href="style.css">
-  
+
   <!-- Firebase App (required) -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <!-- Firebase Auth -->
@@ -14,33 +14,35 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h1>Tausug-English Dictionary</h1>
-    <div class="subheader">Omar Municipality, Sulu Philippines</div>
+  <div class="page-background">
+    <div class="container">
+      <h1>Tausug-English Dictionary</h1>
+      <div class="subheader">Omar Municipality, Sulu Philippines</div>
 
-    <!-- Auth Section -->
-    <div id="auth-section">
-      <button id="loginBtn">Login</button>
-      <button id="logoutBtn" style="display:none;">Logout</button>
-    </div>
+      <!-- Auth Section -->
+      <div id="auth-section">
+        <button id="loginBtn">Login</button>
+        <button id="logoutBtn" style="display:none;">Logout</button>
+      </div>
 
-    <!-- Welcome Message -->
-    <div id="welcomeMessage"></div>
+      <!-- Welcome Message -->
+      <div id="welcomeMessage"></div>
 
-    <!-- Search Section -->
-    <div class="search-container">
-      <input type="text" id="search" placeholder="Search Tausug or English...">
-      <button id="searchBtn">Search</button>
-    </div>
+      <!-- Search Section -->
+      <div class="search-container">
+        <input type="text" id="search" placeholder="Search Tausug or English...">
+        <button id="searchBtn">Search</button>
+      </div>
 
-    <!-- Dictionary Display -->
-    <div id="dictionary"></div>
+      <!-- Dictionary Display -->
+      <div id="dictionary"></div>
 
-    <!-- Add Word Section -->
-    <div class="add-word-container">
-      <input type="text" id="newTausug" placeholder="New Tausug word">
-      <input type="text" id="newEnglish" placeholder="English translation">
-      <button id="addWordBtn">Add Word</button>
+      <!-- Add Word Section -->
+      <div class="add-word-container">
+        <input type="text" id="newTausug" placeholder="New Tausug word">
+        <input type="text" id="newEnglish" placeholder="English translation">
+        <button id="addWordBtn">Add Word</button>
+      </div>
     </div>
   </div>
 
