@@ -1,74 +1,96 @@
-/* General styles */
-body {
-  font-family: Arial, sans-serif;
+/* General Reset */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background: #f5f5f5;
-  color: #333;
+  font-family: Arial, sans-serif;
 }
 
+/* Container */
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 10px;
+}
+
+/* Header */
 header {
   text-align: center;
-  background: #4CAF50;
-  color: white;
-  padding: 20px;
+  margin-bottom: 20px;
 }
 
 header h1 {
-  margin: 0;
   font-size: 2rem;
+  margin-bottom: 10px;
 }
 
-header p {
-  margin: 5px 0 10px;
-}
-
-button {
-  background-color: #2196F3;
-  color: white;
-  border: none;
-  padding: 8px 12px;
+header button {
+  padding: 8px 16px;
   margin: 5px;
   cursor: pointer;
-  border-radius: 5px;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: #fff;
+  transition: 0.2s;
 }
 
-button:hover {
-  background-color: #0b7dda;
+header button:hover {
+  background-color: #0056b3;
 }
 
-input[type="text"] {
+#welcomeMessage {
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+/* Search & Add Sections */
+.search-section,
+.add-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.search-section input,
+.add-section input {
+  flex: 1 1 200px;
   padding: 8px;
-  margin: 5px;
-  width: calc(100% - 20px);
-  max-width: 300px;
-  border-radius: 5px;
+  border-radius: 6px;
   border: 1px solid #ccc;
 }
 
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
+.search-section button,
+.add-section button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  background-color: #28a745;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.search-section, .add-section {
-  margin-bottom: 20px;
-  text-align: center;
+.search-section button:hover,
+.add-section button:hover {
+  background-color: #218838;
+}
+
+/* Dictionary Entries */
+.dictionary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .word-entry {
-  background: white;
-  padding: 10px;
-  margin: 5px;
-  width: 90%;
-  max-width: 600px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #f4f4f4;
 }
 
 .word-texts {
@@ -77,4 +99,33 @@ main {
 
 .word-buttons button {
   margin-left: 5px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.word-buttons button:hover {
+  opacity: 0.8;
+}
+
+.word-buttons button:nth-child(1) { background-color: #17a2b8; color: #fff; } /* Approve/Edit */
+.word-buttons button:nth-child(2) { background-color: #dc3545; color: #fff; } /* Deny/Delete */
+
+/* Responsive */
+@media (max-width: 600px) {
+  .search-section,
+  .add-section {
+    flex-direction: column;
+  }
+  .word-entry {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .word-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
 }
