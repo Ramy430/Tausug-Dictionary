@@ -11,31 +11,33 @@ const firebaseConfig = {
   measurementId: "G-LBKT0624FT"
 };
 
+// ----------------------
 // Initialize Firebase
+// ----------------------
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
 const auth = firebase.auth();
+const db = firebase.firestore();
 
 // ----------------------
-// Admin UID (replace with your UID)
+// Admin UID (replace after login)
 // ----------------------
-let ADMIN_UID = "YOUR_ADMIN_UID"; // 👈 Replace this with your Firebase UID
+let ADMIN_UID = "YOUR_ADMIN_UID"; // Replace with your UID after first login
 
 // ----------------------
 // DOM Elements
 // ----------------------
-const dictionaryContainer = document.getElementById('dictionary');
-const searchInput = document.getElementById('search');
-const searchBtn = document.getElementById('searchBtn');
-const addWordBtn = document.getElementById('addWordBtn');
-const newTausug = document.getElementById('newTausug');
-const newEnglish = document.getElementById('newEnglish');
 const loginBtn = document.getElementById('loginBtn');
 const logoutBtn = document.getElementById('logoutBtn');
 const welcomeMessage = document.getElementById('welcomeMessage');
+const dictionaryContainer = document.getElementById('dictionary');
+const searchInput = document.getElementById('search');
+const searchBtn = document.getElementById('searchBtn');
+const newTausug = document.getElementById('newTausug');
+const newEnglish = document.getElementById('newEnglish');
+const addWordBtn = document.getElementById('addWordBtn');
 
 // ----------------------
-// Old Dictionary Entries
+// Old Dictionary Data
 // ----------------------
 const oldDictionaryData = [
   { tausug: "buli'", english: "gluteus" },
@@ -60,7 +62,11 @@ const oldDictionaryData = [
 // ----------------------
 loginBtn.addEventListener('click', async () => {
   const provider = new firebase.auth.GoogleAuthProvider();
-  await auth.signInWithPopup(provider);
+  try {
+    await auth.signInWithPopup(provider);
+  } catch (error) {
+    alert("Login failed: " + error.message);
+  }
 });
 
 logoutBtn.addEventListener('click', async () => {
@@ -68,16 +74,26 @@ logoutBtn.addEventListener('click', async () => {
   await auth.signOut();
 });
 
+// ----------------------
+// Auth State Change
+// ----------------------
 auth.onAuthStateChanged(user => {
   if (user) {
-    console.log("Your UID is:", user.uid); // copy this UID and replace ADMIN_UID
+    console.log("Logged in UID:", user.uid);
     loginBtn.style.display = "none";
-    logoutBtn.style.display = "inline";
+    logoutBtn.style.display = "inline-block";
     welcomeMessage.textContent = "Welcome! Assalaamu Alykum, " + user.displayName;
+
+    // Copy UID to ADMIN_UID if first time
+    if (ADMIN_UID === "YOUR_ADMIN_UID") {
+      ADMIN_UID = user.uid;
+      console.log("ADMIN_UID set to:", ADMIN_UID);
+    }
+
     importOldDictionary();
     loadDictionary();
   } else {
-    loginBtn.style.display = "inline";
+    loginBtn.style.display = "inline-block";
     logoutBtn.style.display = "none";
     welcomeMessage.textContent = "";
     dictionaryContainer.innerHTML = "";
@@ -92,7 +108,6 @@ async function importOldDictionary() {
   if (snapshot.empty) {
     for (let entry of oldDictionaryData) {
       await db.collection('TausugDictionary').add(entry);
-      console.log(`Imported: ${entry.tausug} - ${entry.english}`);
     }
     console.log("Old dictionary imported successfully!");
   }
@@ -128,7 +143,9 @@ function loadDictionary() {
         });
 
         div.querySelector('.deleteBtn').addEventListener('click', async () => {
-          await db.collection('TausugDictionary').doc(doc.id).delete();
+          if (confirm("Are you sure you want to delete this word?")) {
+            await db.collection('TausugDictionary').doc(doc.id).delete();
+          }
         });
       }
 
@@ -145,6 +162,7 @@ addWordBtn.addEventListener('click', async () => {
   const tausug = newTausug.value.trim();
   const english = newEnglish.value.trim();
   if (!tausug || !english) return;
+
   await db.collection('TausugDictionary').add({ tausug, english });
   newTausug.value = "";
   newEnglish.value = "";
