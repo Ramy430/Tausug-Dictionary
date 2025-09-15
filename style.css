@@ -1,95 +1,97 @@
-/* External Background (mostly blue) */
-.page-background {
-  background: #4a90e2; /* mostly blue */
-  min-height: 100vh;
+/* -----------------------------
+   General Page Styles
+----------------------------- */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #3366cc 40%, #3399ff 30%, #33ccff 30%);
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 20px;
+  align-items: flex-start;
+  min-height: 100vh;
 }
 
-/* Inner Container / Square */
+/* Container for the inner square */
 .container {
-  background: #e0f7fa; /* light blue square */
+  background-color: #add8e6; /* light blue square */
   padding: 30px;
+  margin-top: 50px;
   border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  max-width: 700px;
-  width: 100%;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  max-width: 500px;
+  width: 90%;
   text-align: center;
 }
 
-/* Titles and Headers */
-h1, .subheader {
-  color: #006064; /* greenish-blue text */
-  margin: 5px 0;
+/* Main Title */
+h1 {
+  font-size: 3em; /* Tausug-English Dictionary */
+  color: #008000; /* green */
+  margin-bottom: 10px;
 }
 
-/* Auth Section Buttons */
+/* Subheader */
+.subheader {
+  font-size: 1.5em; /* 1/2 of main title */
+  color: #006400;  /* stronger green */
+  margin-bottom: 20px;
+}
+
+/* Auth Section */
+#auth-section {
+  margin: 20px 0;
+}
+
 #auth-section button {
   padding: 10px 20px;
-  margin: 5px;
   border: none;
-  border-radius: 8px;
-  background-color: #006064;
+  background: #2b6cb0;
   color: #fff;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 1rem;
+  margin: 5px;
+  transition: background 0.3s ease;
 }
 
 #auth-section button:hover {
-  background-color: #004d52;
+  background: #1e4e8c;
 }
 
 /* Welcome Message */
 #welcomeMessage {
-  margin: 10px 0;
-  font-size: 1.1rem;
-  color: #004d52;
+  font-size: 1.2em;
+  margin: 10px 0 20px 0;
+  color: #333;
 }
 
-/* Search */
+/* Search Section */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
 .search-container input {
   padding: 10px;
-  width: 60%;
-  border-radius: 8px;
-  border: 1px solid #006064;
-  margin-right: 5px;
+  width: 70%;
+  border-radius: 8px 0 0 8px;
+  border: 1px solid #ccc;
+  outline: none;
 }
 
 .search-container button {
   padding: 10px 20px;
   border: none;
-  background-color: #006064;
+  background: #2b6cb0;
   color: #fff;
-  border-radius: 8px;
+  border-radius: 0 8px 8px 0;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 .search-container button:hover {
-  background-color: #004d52;
-}
-
-/* Add Word Section */
-.add-word-container input {
-  padding: 10px;
-  margin: 5px 0;
-  width: 45%;
-  border-radius: 8px;
-  border: 1px solid #006064;
-}
-
-.add-word-container button {
-  padding: 10px 20px;
-  border: none;
-  background-color: #006064;
-  color: #fff;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.add-word-container button:hover {
-  background-color: #004d52;
+  background: #1e4e8c;
 }
 
 /* Dictionary Entries */
@@ -97,26 +99,78 @@ h1, .subheader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #b2ebf2; /* slightly lighter blue inside square */
+  margin-bottom: 10px;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+.word-texts {
+  font-size: 1.1em;
+}
+
+/* Add Word Section */
+.add-word-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.add-word-container input {
+  padding: 10px;
+  width: 80%;
   margin: 5px 0;
-  padding: 8px 12px;
   border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
 }
 
-.word-texts span {
-  color: #004d52;
+.add-word-container button {
+  padding: 10px 20px;
+  border: none;
+  background: #2b6cb0;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s ease;
 }
 
+.add-word-container button:hover {
+  background: #1e4e8c;
+}
+
+/* Edit/Delete Buttons (Admin) */
 .word-buttons button {
   margin-left: 5px;
   padding: 5px 10px;
   border: none;
-  border-radius: 6px;
-  background-color: #006064;
+  background: #ff6347;
   color: #fff;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 .word-buttons button:hover {
-  background-color: #004d52;
+  background: #cc4c3c;
+}
+
+/* Responsive Mobile Adjustments */
+@media (max-width: 600px) {
+  .container {
+    width: 95%;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  .subheader {
+    font-size: 1em;
+  }
+
+  .search-container input {
+    width: 60%;
+  }
 }
