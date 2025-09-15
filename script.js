@@ -44,12 +44,11 @@ const newTausug = document.getElementById('newTausug');
 const newEnglish = document.getElementById('newEnglish');
 const addWordBtn = document.getElementById('addWordBtn');
 
-let ADMIN_UID = "YOUR_ADMIN_UID"; // Replace with your UID after first login
-
+let ADMIN_UID = "YOUR_ADMIN_UID"; // Will be replaced automatically after first login
 const dictionaryRef = collection(db, "TausugDictionary");
 
 // ----------------------
-// Old Dictionary Data (to import once)
+// Old Dictionary Data
 // ----------------------
 const oldDictionaryData = [
   { tausug: "buli'", english: "gluteus" },
@@ -70,20 +69,39 @@ const oldDictionaryData = [
 ];
 
 // ----------------------
+// Helper: Check authorized domain
+// ----------------------
+function checkAuthorizedDomain() {
+  const allowedDomains = ["localhost", "tausug-dictionary-online.web.app", "tausug-dictionary-online.firebaseapp.com"];
+  const hostname = window.location.hostname;
+  if (!allowedDomains.includes(hostname)) {
+    alert("Unauthorized domain! Please add this domain in Firebase Authentication settings.");
+    throw new Error("Unauthorized domain: " + hostname);
+  }
+}
+
+// ----------------------
 // Authentication
 // ----------------------
 loginBtn.addEventListener('click', async () => {
-  const provider = new GoogleAuthProvider();
   try {
+    checkAuthorizedDomain();
+    const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider);
-  } catch (error) {
-    alert("Login failed: " + error.message);
+  } catch (err) {
+    console.error(err);
+    alert("Login failed: " + err.message);
   }
 });
 
 logoutBtn.addEventListener('click', async () => {
-  await signOut(auth);
-  alert("Thank you very much. May Allah reward you goodness.");
+  try {
+    await signOut(auth);
+    alert("Thank you very much. May Allah reward you goodness.");
+  } catch (err) {
+    console.error(err);
+    alert("Logout failed: " + err.message);
+  }
 });
 
 // ----------------------
@@ -94,7 +112,6 @@ onAuthStateChanged(auth, (user) => {
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline-block";
     welcomeMessage.textContent = `Welcome! Assalaamu Alykum, ${user.displayName}`;
-
     if (ADMIN_UID === "YOUR_ADMIN_UID") ADMIN_UID = user.uid;
 
     importOldDictionary();
@@ -193,3 +210,4 @@ searchBtn.addEventListener('click', async () => {
     }
   });
 });
+
