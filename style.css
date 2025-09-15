@@ -1,38 +1,41 @@
-/* Reset and general styles */
-body, html {
+
+/* Full-page mostly blue background */
+html, body {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
   height: 100%;
   width: 100%;
-  background-color: #3a8edc; /* mostly blue background */
+  font-family: Arial, sans-serif;
+  background-color: #3a8edc; /* mostly blue external surroundings */
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* content starts near top */
 }
 
 /* Container for all content */
 .container {
   text-align: center;
   padding: 20px 40px;
-  margin-top: 30px; /* space from top */
-  color: white; /* text color */
+  margin-top: 30px;
+  width: 100%;
+  max-width: 800px;
+  box-sizing: border-box;
+  color: white;
 }
 
-/* Main headings */
+/* Headings */
 h1 {
   font-size: 2.5em;
   margin-bottom: 10px;
-  color: white; /* text in white */
+  color: white;
 }
 
 .subheader {
   font-size: 1.2em;
   margin-bottom: 20px;
-  color: white; /* text in white */
+  color: white;
 }
 
-/* Auth section */
+/* Auth Section */
 #auth-section {
   margin: 20px auto;
 }
@@ -40,7 +43,7 @@ h1 {
 #auth-section button {
   padding: 10px 20px;
   border: none;
-  background: #1e4e8c; /* darker blue */
+  background: #1e4e8c;
   color: white;
   border-radius: 8px;
   cursor: pointer;
@@ -49,7 +52,14 @@ h1 {
 }
 
 #auth-section button:hover {
-  background: #163b70; /* darker on hover */
+  background: #163b70;
+}
+
+/* Welcome message */
+#welcomeMessage {
+  margin: 10px 0;
+  font-size: 1.1em;
+  color: white;
 }
 
 /* Search Section */
@@ -113,3 +123,4 @@ h1 {
   cursor: pointer;
   margin-top: 10px;
 }
+
