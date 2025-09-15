@@ -3,31 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tausug-English Dictionary</title>
+  <title>Tausug Dictionary Online</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Tausug Dictionary Online</h1>
-      <div id="welcomeMessage"></div>
+  <header>
+    <h1>Tausug Dictionary Online</h1>
+    <div id="authControls">
       <button id="loginBtn">Login with Google</button>
       <button id="logoutBtn" style="display:none;">Logout</button>
-    </header>
+      <span id="welcomeMessage"></span>
+    </div>
+  </header>
 
-    <section class="search-section">
+  <main>
+    <section id="searchSection">
       <input type="text" id="search" placeholder="Search Tausug or English...">
       <button id="searchBtn">Search</button>
     </section>
 
-    <section class="add-section">
+    <section id="addWordSection">
       <input type="text" id="newTausug" placeholder="New Tausug word">
       <input type="text" id="newEnglish" placeholder="English translation">
       <button id="addWordBtn">Add Word</button>
     </section>
 
-    <section id="dictionary" class="dictionary"></section>
-  </div>
+    <section id="dictionary"></section>
+  </main>
 
   <script type="module" src="app.js"></script>
 </body>
