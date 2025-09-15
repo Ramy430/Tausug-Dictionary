@@ -2,7 +2,7 @@
 // Modular Firebase imports
 // ----------------------
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, collection, addDoc, getDocs, onSnapshot, query, orderBy, updateDoc, deleteDoc, doc, serverTimestamp } from "firebase/firestore";
 
 // ----------------------
@@ -26,9 +26,9 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // ----------------------
-// Admin UID (replace with your Google UID after first login)
+// Admin UID
 // ----------------------
-let ADMIN_UID = "YOUR_ADMIN_UID";
+let ADMIN_UID = "YOUR_ADMIN_UID"; // replace after first login
 
 // ----------------------
 // DOM Elements
@@ -46,19 +46,28 @@ const addWordBtn = document.getElementById('addWordBtn');
 // ----------------------
 // Login & Logout
 // ----------------------
-loginBtn.addEventListener('click', async () => {
+loginBtn.addEventListener('click', () => {
   const provider = new GoogleAuthProvider();
-  try {
-    await signInWithPopup(auth, provider);
-  } catch (error) {
-    alert("Login failed: " + error.message);
-  }
+  signInWithRedirect(auth, provider); // ✅ redirect login
 });
 
 logoutBtn.addEventListener('click', async () => {
   alert("Thank you very much. May Allah reward you goodness.");
   await signOut(auth);
 });
+
+// ----------------------
+// Handle redirect result
+// ----------------------
+getRedirectResult(auth)
+  .then((result) => {
+    if (result.user) {
+      console.log("Logged in as:", result.user.displayName);
+    }
+  })
+  .catch((error) => {
+    console.error("Redirect login error:", error);
+  });
 
 // ----------------------
 // Auth State
@@ -178,7 +187,6 @@ async function deleteWord(docId) {
 
 // ----------------------
 // Edit Word (User)
-// ----------------------
 function editWord(docId, oldTausug, oldEnglish) {
   const newT = prompt("Edit Tausug word:", oldTausug);
   const newE = prompt("Edit English translation:", oldEnglish);
