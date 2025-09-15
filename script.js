@@ -17,9 +17,9 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 
 // ----------------------
-// Admin UID
+// Admin UID (replace with your UID)
 // ----------------------
-let ADMIN_UID = "YOUR_ADMIN_UID"; // replace with your UID from Firebase console
+let ADMIN_UID = "YOUR_ADMIN_UID"; // 👈 Replace this with your Firebase UID
 
 // ----------------------
 // DOM Elements
@@ -70,7 +70,7 @@ logoutBtn.addEventListener('click', async () => {
 
 auth.onAuthStateChanged(user => {
   if (user) {
-    console.log("Your UID is:", user.uid);
+    console.log("Your UID is:", user.uid); // copy this UID and replace ADMIN_UID
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline";
     welcomeMessage.textContent = "Welcome! Assalaamu Alykum, " + user.displayName;
@@ -99,7 +99,7 @@ async function importOldDictionary() {
 }
 
 // ----------------------
-// Load Dictionary
+// Load Dictionary (real-time)
 // ----------------------
 function loadDictionary() {
   db.collection('TausugDictionary').orderBy('tausug').onSnapshot(snapshot => {
