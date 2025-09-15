@@ -1,8 +1,6 @@
 /* --- Page Background --- */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0A1A3D; /* Dark blue */
+.page-background {
+  background: linear-gradient(to right, #4A90E2, #4A90E2); /* Blue surroundings */
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -11,14 +9,13 @@ body {
 
 /* --- Container / Square --- */
 .container {
-  background-color: lightblue; /* keep your square color */
+  background-color: lightblue;
   padding: 25px;
   border-radius: 15px;
   width: 90%;
   max-width: 500px;
   box-sizing: border-box;
   text-align: center;
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
 }
 
 /* --- Headers --- */
@@ -30,11 +27,11 @@ h1 {
 
 .subheader {
   color: green;
-  font-size: 1rem;
+  font-size: 1rem; /* Half of h1 */
   margin-bottom: 20px;
 }
 
-/* --- Auth Section --- */
+/* --- Auth Buttons --- */
 #auth-section {
   margin: 15px 0;
 }
@@ -47,7 +44,6 @@ h1 {
   border-radius: 8px;
   margin: 5px;
   cursor: pointer;
-  font-size: 1rem;
 }
 
 #auth-section button:hover {
@@ -67,22 +63,20 @@ h1 {
 }
 
 .search-container input {
-  padding: 10px;
+  padding: 8px;
   width: 65%;
   margin-right: 5px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  font-size: 1rem;
 }
 
 .search-container button {
-  padding: 10px 15px;
+  padding: 8px 15px;
   border: none;
   background: green;
   color: white;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
 }
 
 .search-container button:hover {
@@ -90,41 +84,50 @@ h1 {
 }
 
 /* --- Dictionary Entries --- */
-.word-card {
+.word-entry {
   margin: 10px 0;
-  padding: 10px;
+  padding: 5px;
   background-color: #e6f7ff;
   border-radius: 5px;
-  text-align: left;
-  font-size: 1rem;
-  box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.word-buttons button {
+  margin-left: 5px;
+  padding: 3px 8px;
+  background-color: orange;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.word-buttons button:hover {
+  background-color: darkorange;
 }
 
 /* --- Add Word Section --- */
 .add-word-container {
   margin: 15px 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 .add-word-container input {
-  padding: 10px;
+  padding: 8px;
   width: 40%;
-  margin: 5px;
+  margin: 5px 2px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  font-size: 1rem;
 }
 
 .add-word-container button {
-  padding: 10px 20px;
+  padding: 8px 15px;
   border: none;
   background: green;
   color: white;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
 }
 
 .add-word-container button:hover {
@@ -143,7 +146,7 @@ h1 {
   }
 
   .subheader {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
   }
 
   .search-container input {
