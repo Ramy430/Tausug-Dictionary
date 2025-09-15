@@ -1,4 +1,16 @@
 // ----------------------
+// Firebase v9+ Modular Imports
+// ----------------------
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics.js";
+import { 
+  getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { 
+  getFirestore, collection, addDoc, getDocs, onSnapshot, orderBy, query, updateDoc, deleteDoc, doc 
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+// ----------------------
 // Firebase Configuration
 // ----------------------
 const firebaseConfig = {
@@ -14,14 +26,10 @@ const firebaseConfig = {
 // ----------------------
 // Initialize Firebase
 // ----------------------
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-
-// ----------------------
-// Admin UID (replace after login)
-// ----------------------
-let ADMIN_UID = "YOUR_ADMIN_UID"; // Replace with your UID after first login
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 // ----------------------
 // DOM Elements
@@ -36,8 +44,12 @@ const newTausug = document.getElementById('newTausug');
 const newEnglish = document.getElementById('newEnglish');
 const addWordBtn = document.getElementById('addWordBtn');
 
+let ADMIN_UID = "YOUR_ADMIN_UID"; // Replace with your UID after first login
+
+const dictionaryRef = collection(db, "TausugDictionary");
+
 // ----------------------
-// Old Dictionary Data
+// Old Dictionary Data (to import once)
 // ----------------------
 const oldDictionaryData = [
   { tausug: "buli'", english: "gluteus" },
@@ -61,34 +73,29 @@ const oldDictionaryData = [
 // Authentication
 // ----------------------
 loginBtn.addEventListener('click', async () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
+  const provider = new GoogleAuthProvider();
   try {
-    await auth.signInWithPopup(provider);
+    await signInWithPopup(auth, provider);
   } catch (error) {
     alert("Login failed: " + error.message);
   }
 });
 
 logoutBtn.addEventListener('click', async () => {
+  await signOut(auth);
   alert("Thank you very much. May Allah reward you goodness.");
-  await auth.signOut();
 });
 
 // ----------------------
 // Auth State Change
 // ----------------------
-auth.onAuthStateChanged(user => {
+onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log("Logged in UID:", user.uid);
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline-block";
-    welcomeMessage.textContent = "Welcome! Assalaamu Alykum, " + user.displayName;
+    welcomeMessage.textContent = `Welcome! Assalaamu Alykum, ${user.displayName}`;
 
-    // Copy UID to ADMIN_UID if first time
-    if (ADMIN_UID === "YOUR_ADMIN_UID") {
-      ADMIN_UID = user.uid;
-      console.log("ADMIN_UID set to:", ADMIN_UID);
-    }
+    if (ADMIN_UID === "YOUR_ADMIN_UID") ADMIN_UID = user.uid;
 
     importOldDictionary();
     loadDictionary();
@@ -104,10 +111,10 @@ auth.onAuthStateChanged(user => {
 // Import Old Dictionary (once if empty)
 // ----------------------
 async function importOldDictionary() {
-  const snapshot = await db.collection('TausugDictionary').get();
+  const snapshot = await getDocs(dictionaryRef);
   if (snapshot.empty) {
     for (let entry of oldDictionaryData) {
-      await db.collection('TausugDictionary').add(entry);
+      await addDoc(dictionaryRef, entry);
     }
     console.log("Old dictionary imported successfully!");
   }
@@ -117,10 +124,11 @@ async function importOldDictionary() {
 // Load Dictionary (real-time)
 // ----------------------
 function loadDictionary() {
-  db.collection('TausugDictionary').orderBy('tausug').onSnapshot(snapshot => {
+  const q = query(dictionaryRef, orderBy("tausug"));
+  onSnapshot(q, (snapshot) => {
     dictionaryContainer.innerHTML = "";
-    snapshot.forEach(doc => {
-      const entry = doc.data();
+    snapshot.forEach((docSnap) => {
+      const entry = docSnap.data();
       const div = document.createElement('div');
       div.className = 'word-entry';
       div.innerHTML = `
@@ -138,13 +146,13 @@ function loadDictionary() {
           const newT = prompt("Edit Tausug word:", entry.tausug);
           const newE = prompt("Edit English translation:", entry.english);
           if (newT && newE) {
-            await db.collection('TausugDictionary').doc(doc.id).update({ tausug: newT, english: newE });
+            await updateDoc(doc(db, "TausugDictionary", docSnap.id), { tausug: newT, english: newE });
           }
         });
 
         div.querySelector('.deleteBtn').addEventListener('click', async () => {
           if (confirm("Are you sure you want to delete this word?")) {
-            await db.collection('TausugDictionary').doc(doc.id).delete();
+            await deleteDoc(doc(db, "TausugDictionary", docSnap.id));
           }
         });
       }
@@ -163,7 +171,7 @@ addWordBtn.addEventListener('click', async () => {
   const english = newEnglish.value.trim();
   if (!tausug || !english) return;
 
-  await db.collection('TausugDictionary').add({ tausug, english });
+  await addDoc(dictionaryRef, { tausug, english });
   newTausug.value = "";
   newEnglish.value = "";
 });
@@ -173,10 +181,10 @@ addWordBtn.addEventListener('click', async () => {
 // ----------------------
 searchBtn.addEventListener('click', async () => {
   const term = searchInput.value.trim().toLowerCase();
-  const snapshot = await db.collection('TausugDictionary').get();
+  const snapshot = await getDocs(dictionaryRef);
   dictionaryContainer.innerHTML = "";
-  snapshot.forEach(doc => {
-    const entry = doc.data();
+  snapshot.forEach(docSnap => {
+    const entry = docSnap.data();
     if (entry.tausug.toLowerCase().includes(term) || entry.english.toLowerCase().includes(term)) {
       const div = document.createElement('div');
       div.className = 'word-entry';
