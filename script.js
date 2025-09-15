@@ -1,201 +1,122 @@
-// ----------------------
-// Firebase v9+ Modular Imports
-// ----------------------
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, collection, addDoc, getDocs, onSnapshot, orderBy, query, updateDoc, deleteDoc, doc } from "firebase/firestore";
-
-// ----------------------
-// Firebase Configuration
-// ----------------------
+// ====== Your Firebase Config ======
 const firebaseConfig = {
-  apiKey: "AIzaSyCgAEuD8F41dH5nUeoVxMot4-rTp4olmr8",
-  authDomain: "tausug-dictionary-online.firebaseapp.com",
-  projectId: "tausug-dictionary-online",
-  storageBucket: "tausug-dictionary-online.firebasestorage.app",
-  messagingSenderId: "919499038754",
-  appId: "1:919499038754:web:051037787db5a6123c2a7b",
-  measurementId: "G-LBKT0624FT"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 
-// ----------------------
 // Initialize Firebase
-// ----------------------
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-// ----------------------
-// Admin UID (set manually after first login)
-// ----------------------
-let ADMIN_UID = "YOUR_ADMIN_UID"; // replace with your Google UID
-
-// ----------------------
-// DOM Elements
-// ----------------------
+// ====== DOM Elements ======
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 const welcomeMessage = document.getElementById("welcomeMessage");
-const roleBadge = document.getElementById("roleBadge");
-const userInfo = document.getElementById("user-info");
-const userInfoMessage = document.getElementById("user-info-message");
-const dictionaryContainer = document.getElementById("dictionary");
+const addWordContainer = document.querySelector(".add-word-container");
+const addWordBtn = document.getElementById("addWordBtn");
+const newTausugInput = document.getElementById("newTausug");
+const newEnglishInput = document.getElementById("newEnglish");
+const dictionaryDiv = document.getElementById("dictionary");
 const searchInput = document.getElementById("search");
 const searchBtn = document.getElementById("searchBtn");
-const newTausug = document.getElementById("newTausug");
-const newEnglish = document.getElementById("newEnglish");
-const addWordBtn = document.getElementById("addWordBtn");
-const addWordContainer = document.getElementById("add-word-container");
 
-// ----------------------
-// Login with Google (Domain Restricted)
-// ----------------------
-loginBtn.addEventListener("click", async () => {
-  const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({
-    hd: "yourdomain.com" // 🔑 replace with your domain (optional)
-  });
+// ====== Define Admin Emails ======
+const adminEmails = ["youradmin@gmail.com"]; // change this to your admin email(s)
 
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-
-    // Reject if domain not allowed
-    if (!user.email.endsWith("@yourdomain.com")) {
-      alert("Unauthorized domain. Access denied.");
-      await signOut(auth);
-      return;
-    }
-  } catch (error) {
-    alert("Login failed: " + error.message);
-  }
+// ====== Login ======
+loginBtn.addEventListener("click", () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider)
+    .then(result => {
+      console.log("User logged in:", result.user.email);
+    })
+    .catch(error => {
+      console.error("Login failed:", error.message);
+      alert("Login failed: " + error.message);
+    });
 });
 
-// ----------------------
-// Logout
-// ----------------------
-logoutBtn.addEventListener("click", async () => {
-  alert("Thank you very much. May Allah reward you goodness.");
-  await signOut(auth);
+// ====== Logout ======
+logoutBtn.addEventListener("click", () => {
+  auth.signOut();
 });
 
-// ----------------------
-// Auth State Change
-// ----------------------
-onAuthStateChanged(auth, (user) => {
+// ====== Auth State ======
+auth.onAuthStateChanged(user => {
   if (user) {
+    welcomeMessage.textContent = `Welcome! Assalaamu Alykum, ${user.displayName || user.email}`;
     loginBtn.style.display = "none";
-    userInfo.style.display = "block";
+    logoutBtn.style.display = "inline-block";
 
-    // Show welcome
-    welcomeMessage.textContent = `Welcome! Assalaamu Alykum, ${user.displayName}`;
-
-    // Role check
-    const isAdmin = user.uid === ADMIN_UID;
-
-    if (isAdmin) {
-      roleBadge.textContent = "Admin";
-      roleBadge.className = "badge admin";
-      userInfoMessage.textContent = "You have full control over the dictionary.";
-      addWordContainer.style.display = "block";
+    // Show Add Word only for admin
+    if (adminEmails.includes(user.email)) {
+      addWordContainer.style.display = "flex";
     } else {
-      roleBadge.textContent = "User";
-      roleBadge.className = "badge user";
-      userInfoMessage.textContent = "You can search words in the dictionary.";
       addWordContainer.style.display = "none";
     }
 
-    // Load dictionary
-    loadDictionary(isAdmin);
-
+    loadWords();
   } else {
+    welcomeMessage.textContent = "Please log in to continue.";
     loginBtn.style.display = "inline-block";
-    userInfo.style.display = "none";
-    welcomeMessage.textContent = "";
-    roleBadge.textContent = "";
-    dictionaryContainer.innerHTML = "";
+    logoutBtn.style.display = "none";
     addWordContainer.style.display = "none";
+    dictionaryDiv.innerHTML = "";
   }
 });
 
-// ----------------------
-// Load Dictionary (Realtime)
-// ----------------------
-function loadDictionary(isAdmin) {
-  const q = query(collection(db, "TausugDictionary"), orderBy("tausug"));
-  onSnapshot(q, (snapshot) => {
-    dictionaryContainer.innerHTML = "";
-    snapshot.forEach((docSnap) => {
-      const entry = docSnap.data();
-      const div = document.createElement("div");
-      div.className = "word-entry";
-      div.innerHTML = `
-        <div class="word-texts">
-          <span class="tausug">${entry.tausug}</span> - 
-          <span class="english">${entry.english}</span>
-        </div>
-        <div class="word-buttons">
-          ${isAdmin ? `
-            <button class="editBtn">Edit</button>
-            <button class="deleteBtn deleteBtn">Delete</button>
-          ` : ""}
-        </div>
-      `;
-
-      if (isAdmin) {
-        div.querySelector(".editBtn").addEventListener("click", async () => {
-          const newT = prompt("Edit Tausug word:", entry.tausug);
-          const newE = prompt("Edit English translation:", entry.english);
-          if (newT && newE) {
-            await updateDoc(doc(db, "TausugDictionary", docSnap.id), {
-              tausug: newT,
-              english: newE
-            });
-          }
-        });
-
-        div.querySelector(".deleteBtn").addEventListener("click", async () => {
-          if (confirm("Are you sure you want to delete this word?")) {
-            await deleteDoc(doc(db, "TausugDictionary", docSnap.id));
-          }
-        });
-      }
-
-      dictionaryContainer.appendChild(div);
+// ====== Load Words ======
+function loadWords() {
+  db.collection("dictionary").orderBy("tausug").onSnapshot(snapshot => {
+    dictionaryDiv.innerHTML = "";
+    snapshot.forEach(doc => {
+      const word = doc.data();
+      const wordCard = document.createElement("div");
+      wordCard.className = "word-card";
+      wordCard.innerHTML = `<strong>${word.tausug}</strong> - ${word.english}`;
+      dictionaryDiv.appendChild(wordCard);
     });
   });
 }
 
-// ----------------------
-// Add New Word (Admin only)
-// ----------------------
+// ====== Add Word ======
 addWordBtn.addEventListener("click", async () => {
-  if (!auth.currentUser) return alert("Please login first!");
-  if (auth.currentUser.uid !== ADMIN_UID) return alert("Only Admins can add words!");
+  const tausugWord = newTausugInput.value.trim();
+  const englishWord = newEnglishInput.value.trim();
 
-  const tausug = newTausug.value.trim();
-  const english = newEnglish.value.trim();
-  if (!tausug || !english) return;
+  if (!tausugWord || !englishWord) {
+    alert("Please enter both Tausug and English words.");
+    return;
+  }
 
-  await addDoc(collection(db, "TausugDictionary"), { tausug, english });
-  newTausug.value = "";
-  newEnglish.value = "";
+  try {
+    await db.collection("dictionary").add({
+      tausug: tausugWord,
+      english: englishWord,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    newTausugInput.value = "";
+    newEnglishInput.value = "";
+  } catch (error) {
+    console.error("Error adding word:", error);
+    alert("Error adding word: " + error.message);
+  }
 });
 
-// ----------------------
-// Search Dictionary
-// ----------------------
-searchBtn.addEventListener("click", async () => {
-  const term = searchInput.value.trim().toLowerCase();
-  const snapshot = await getDocs(collection(db, "TausugDictionary"));
-  dictionaryContainer.innerHTML = "";
-  snapshot.forEach((docSnap) => {
-    const entry = docSnap.data();
-    if (entry.tausug.toLowerCase().includes(term) || entry.english.toLowerCase().includes(term)) {
-      const div = document.createElement("div");
-      div.className = "word-entry";
-      div.innerHTML = `<span class="tausug">${entry.tausug}</span> - <span class="english">${entry.english}</span>`;
-      dictionaryContainer.appendChild(div);
+// ====== Search ======
+searchBtn.addEventListener("click", () => {
+  const query = searchInput.value.toLowerCase();
+  const words = dictionaryDiv.querySelectorAll(".word-card");
+  words.forEach(card => {
+    if (card.textContent.toLowerCase().includes(query)) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
     }
   });
 });
