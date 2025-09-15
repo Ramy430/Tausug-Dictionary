@@ -1,150 +1,80 @@
-/* --- Page Background --- */
-.page-background {
-  background: #001f4d; /* Dark blue */
-  min-height: 100vh;
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f5f5f5;
+  color: #333;
+}
+
+header {
+  text-align: center;
+  background: #4CAF50;
+  color: white;
+  padding: 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+header p {
+  margin: 5px 0 10px;
+}
+
+button {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #0b7dda;
+}
+
+input[type="text"] {
+  padding: 8px;
+  margin: 5px;
+  width: calc(100% - 20px);
+  max-width: 300px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+main {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   padding: 20px;
 }
 
-/* --- Container / Square --- */
-.container {
-  background-color: #4da6ff; /* Light blue square */
-  padding: 25px;
-  border-radius: 15px;
-  width: 100%;
-  max-width: 500px;
-  box-sizing: border-box;
+.search-section, .add-section {
+  margin-bottom: 20px;
   text-align: center;
-  color: #003366;
 }
 
-/* --- Headers --- */
-h1 {
-  color: #ffffff;
-  font-size: 2rem;
-  margin-bottom: 5px;
-}
-
-.subheader {
-  color: #e6f2ff;
-  font-size: 1rem;
-  margin-bottom: 15px;
-}
-
-/* --- Auth Buttons --- */
-#auth-section button {
-  padding: 10px 20px;
-  border: none;
-  background: #0066cc;
-  color: white;
-  border-radius: 8px;
-  margin: 5px;
-  cursor: pointer;
-}
-
-#auth-section button:hover {
-  background: #004080;
-}
-
-/* --- Welcome Message --- */
-#welcomeMessage {
-  margin: 10px 0;
-  font-size: 1rem;
-  color: #ffffe6;
-}
-
-/* --- Search Section --- */
-.search-container input {
-  padding: 8px;
-  width: 65%;
-  margin-right: 5px;
-  border-radius: 5px;
-  border: 1px solid #003366;
-}
-
-.search-container button {
-  padding: 8px 15px;
-  border: none;
-  background: #0066cc;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.search-container button:hover {
-  background: #004080;
-}
-
-/* --- Dictionary Entries --- */
 .word-entry {
-  margin: 10px 0;
-  padding: 5px;
-  background-color: #cce0ff;
-  border-radius: 5px;
+  background: white;
+  padding: 10px;
+  margin: 5px;
+  width: 90%;
+  max-width: 600px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.word-texts {
+  font-size: 1rem;
 }
 
 .word-buttons button {
   margin-left: 5px;
-  padding: 3px 8px;
-  background-color: #ff8000;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.word-buttons button:hover {
-  background-color: #cc6600;
-}
-
-/* --- Add Word Section --- */
-.add-word-container input {
-  padding: 8px;
-  width: 40%;
-  margin: 5px 2px;
-  border-radius: 5px;
-  border: 1px solid #003366;
-}
-
-.add-word-container button {
-  padding: 8px 15px;
-  border: none;
-  background: #0066cc;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.add-word-container button:hover {
-  background: #004080;
-}
-
-/* --- Responsive for Mobile --- */
-@media (max-width: 600px) {
-  .container {
-    width: 95%;
-    padding: 20px;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  .subheader {
-    font-size: 0.75rem;
-  }
-
-  .search-container input {
-    width: 60%;
-  }
-
-  .add-word-container input {
-    width: 80%;
-    margin-bottom: 5px;
-  }
 }
