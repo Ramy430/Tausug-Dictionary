@@ -7,15 +7,14 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Tausug-English Dictionary</h1>
-    <p>Omar Municipality, Sulu Philippines</p>
-    <button id="loginBtn">Login with Google</button>
-    <button id="logoutBtn" style="display:none;">Logout</button>
-    <p id="welcomeMessage"></p>
-  </header>
+  <div class="container">
+    <header>
+      <h1>Tausug Dictionary Online</h1>
+      <div id="welcomeMessage"></div>
+      <button id="loginBtn">Login with Google</button>
+      <button id="logoutBtn" style="display:none;">Logout</button>
+    </header>
 
-  <main>
     <section class="search-section">
       <input type="text" id="search" placeholder="Search Tausug or English...">
       <button id="searchBtn">Search</button>
@@ -27,8 +26,8 @@
       <button id="addWordBtn">Add Word</button>
     </section>
 
-    <section id="dictionary"></section>
-  </main>
+    <section id="dictionary" class="dictionary"></section>
+  </div>
 
   <script type="module" src="app.js"></script>
 </body>
