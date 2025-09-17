@@ -24,7 +24,7 @@
         
         .container {
             width: 100%;
-            max-width: 500px;
+            max-width: 550px;
             background-color: white;
             border-radius: 20px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
@@ -36,6 +36,7 @@
             color: white;
             text-align: center;
             padding: 30px 20px;
+            position: relative;
         }
         
         .header h1 {
@@ -88,6 +89,30 @@
         
         .search-btn:hover {
             background: #3498db;
+        }
+        
+        .add-word-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .add-word-btn:hover {
+            background: #2ecc71;
+        }
+        
+        .add-word-btn i {
+            margin-right: 8px;
         }
         
         .divider {
@@ -158,6 +183,93 @@
             font-style: italic;
         }
         
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h2 {
+            color: #2c3e50;
+            margin: 0;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #7f8c8d;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .submit-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            font-size: 16px;
+        }
+        
+        .submit-btn:hover {
+            background: #2ecc71;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+        
         @media (max-width: 600px) {
             .header {
                 padding: 20px 15px;
@@ -173,6 +285,10 @@
             
             .search-input {
                 padding: 12px 15px;
+            }
+            
+            .modal-content {
+                padding: 20px;
             }
         }
     </style>
@@ -193,6 +309,10 @@
                 </button>
             </div>
             
+            <button class="add-word-btn" id="addWordBtn">
+                <i class="fas fa-plus"></i> Add New Word
+            </button>
+            
             <div id="searchResults"></div>
             
             <div class="divider"></div>
@@ -210,9 +330,33 @@
         </div>
     </div>
 
+    <!-- Add Word Modal -->
+    <div class="modal" id="addWordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Word</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <form id="wordForm">
+                <div class="form-group">
+                    <label for="newWord">Tausug Word</label>
+                    <input type="text" id="newWord" placeholder="Enter Tausug word" required>
+                </div>
+                <div class="form-group">
+                    <label for="newMeaning">English Meaning</label>
+                    <input type="text" id="newMeaning" placeholder="Enter English meaning" required>
+                </div>
+                <button type="submit" class="submit-btn">Add Word</button>
+            </form>
+            <div class="success-message" id="successMessage">
+                Word added successfully! Thank you for your contribution.
+            </div>
+        </div>
+    </div>
+
     <script>
         // Dictionary data
-        const dictionary = [
+        let dictionary = [
             { word: 'maunu-unu', meaning: 'What' },
             { word: 'maanu', meaning: 'Why' },
             { word: 'kiyasa', meaning: 'How' },
@@ -250,6 +394,13 @@
         const searchBtn = document.getElementById('searchBtn');
         const searchResults = document.getElementById('searchResults');
         const wordListContainer = document.getElementById('wordListContainer');
+        const addWordBtn = document.getElementById('addWordBtn');
+        const addWordModal = document.getElementById('addWordModal');
+        const closeModal = document.getElementById('closeModal');
+        const wordForm = document.getElementById('wordForm');
+        const newWordInput = document.getElementById('newWord');
+        const newMeaningInput = document.getElementById('newMeaning');
+        const successMessage = document.getElementById('successMessage');
 
         // Display word list
         function displayWordList(words) {
@@ -301,6 +452,58 @@
                 wordListContainer.innerHTML = '';
             }
         }
+
+        // Open modal
+        addWordBtn.addEventListener('click', function() {
+            addWordModal.style.display = 'flex';
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', function() {
+            addWordModal.style.display = 'none';
+            successMessage.style.display = 'none';
+            wordForm.reset();
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === addWordModal) {
+                addWordModal.style.display = 'none';
+                successMessage.style.display = 'none';
+                wordForm.reset();
+            }
+        });
+
+        // Handle form submission
+        wordForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newWord = newWordInput.value.trim();
+            const newMeaning = newMeaningInput.value.trim();
+            
+            if (newWord && newMeaning) {
+                // Add new word to dictionary
+                dictionary.push({ word: newWord.toLowerCase(), meaning: newMeaning });
+                
+                // Sort dictionary alphabetically
+                dictionary.sort((a, b) => a.word.localeCompare(b.word));
+                
+                // Update display
+                displayWordList(dictionary);
+                
+                // Show success message
+                successMessage.style.display = 'block';
+                
+                // Clear form
+                wordForm.reset();
+                
+                // Hide success message and close modal after 2 seconds
+                setTimeout(function() {
+                    successMessage.style.display = 'none';
+                    addWordModal.style.display = 'none';
+                }, 2000);
+            }
+        });
 
         // Event listeners
         searchBtn.addEventListener('click', searchDictionary);
