@@ -50,6 +50,27 @@
             display: none;
         }
         
+        .home-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .home-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
         .header h1 {
             font-size: 28px;
             margin-bottom: 10px;
@@ -474,6 +495,9 @@
 <body>
     <div class="container">
         <div class="header">
+            <button class="home-btn" id="homeBtn">
+                <i class="fas fa-home"></i>
+            </button>
             <div class="admin-badge" id="adminBadge"><i class="fas fa-shield-alt"></i> Admin Mode</div>
             <h1>Tausug Dictionary</h1>
             <div class="location">Omar Municipality, Sulu, Philippines</div>
@@ -594,6 +618,7 @@
         const adminPassword = document.getElementById('adminPassword');
         const loginBtn = document.getElementById('loginBtn');
         const adminBadge = document.getElementById('adminBadge');
+        const homeBtn = document.getElementById('homeBtn');
         const addWordModal = document.getElementById('addWordModal');
         const closeModal = document.getElementById('closeModal');
         const wordForm = document.getElementById('wordForm');
@@ -849,6 +874,20 @@
                 wordListContainer.innerHTML = '';
             }
         }
+
+        // Home button functionality
+        homeBtn.addEventListener('click', function() {
+            // Clear search
+            searchInput.value = '';
+            searchResults.style.display = 'none';
+            
+            // Exit edit mode
+            editMode = false;
+            toggleEditButtons();
+            
+            // Show all words
+            displayWordList(dictionary);
+        });
 
         // Toggle edit mode
         editModeBtn.addEventListener('click', function() {
