@@ -24,7 +24,7 @@
         
         .container {
             width: 100%;
-            max-width: 650px;
+            max-width: 700px;
             background-color: white;
             border-radius: 20px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
@@ -230,6 +230,12 @@
             color: #7f8c8d;
         }
         
+        .synonyms {
+            font-size: 12px;
+            color: #95a5a6;
+            margin-top: 4px;
+        }
+        
         .word-actions {
             display: flex;
             gap: 8px;
@@ -297,6 +303,18 @@
             display: none;
         }
         
+        .edit-textarea {
+            border: 1px solid #3498db;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 14px;
+            width: 100%;
+            display: none;
+            resize: vertical;
+            min-height: 60px;
+            margin-top: 5px;
+        }
+        
         .approved-badge {
             background: #27ae60;
             color: white;
@@ -348,8 +366,10 @@
             padding: 30px;
             border-radius: 15px;
             width: 90%;
-            max-width: 450px;
+            max-width: 500px;
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            max-height: 90vh;
+            overflow-y: auto;
         }
         
         .modal-header {
@@ -383,12 +403,17 @@
             font-weight: 500;
         }
         
-        .form-group input {
+        .form-group input, .form-group textarea {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid #e0e6ed;
             border-radius: 8px;
             font-size: 16px;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
         }
         
         .submit-btn {
@@ -543,7 +568,7 @@
         </div>
         
         <div class="footer">
-            <p>© 2023 Tausug Dictionary | Preserving the Tausug Language</p>
+            <p>© 2025 Tausug Dictionary | Preserving the Tausug Language</p>
         </div>
     </div>
 
@@ -563,6 +588,10 @@
                     <label for="newMeaning">English Meaning</label>
                     <input type="text" id="newMeaning" placeholder="Enter English meaning" required>
                 </div>
+                <div class="form-group">
+                    <label for="newSynonyms">Synonyms (optional, comma separated)</label>
+                    <input type="text" id="newSynonyms" placeholder="Enter synonyms">
+                </div>
                 <button type="submit" class="submit-btn">Add Word</button>
             </form>
             <div class="success-message" id="successMessage">
@@ -571,39 +600,72 @@
         </div>
     </div>
 
+    <!-- Edit Word Modal (for approved words) -->
+    <div class="modal" id="editWordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Approved Word</h2>
+                <button class="close-btn" id="closeEditModal">&times;</button>
+            </div>
+            <form id="editWordForm">
+                <input type="hidden" id="editWordIndex">
+                <div class="form-group">
+                    <label for="editWord">Tausug Word</label>
+                    <input type="text" id="editWord" placeholder="Enter Tausug word" required>
+                </div>
+                <div class="form-group">
+                    <label for="editMeaning">English Meaning</label>
+                    <input type="text" id="editMeaning" placeholder="Enter English meaning" required>
+                </div>
+                <div class="form-group">
+                    <label for="editSynonyms">Synonyms (comma separated)</label>
+                    <input type="text" id="editSynonyms" placeholder="Enter synonyms">
+                </div>
+                <div class="form-group">
+                    <label for="editAdditionalMeanings">Additional Meanings (one per line)</label>
+                    <textarea id="editAdditionalMeanings" placeholder="Enter additional meanings"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Save Changes</button>
+            </form>
+            <div class="success-message" id="editSuccessMessage">
+                Word updated successfully!
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Dictionary data with approval status
+        // Dictionary data with approval status and additional fields
         let dictionary = [
-            { word: 'maunu-unu', meaning: 'What', approved: true },
-            { word: 'maanu', meaning: 'Why', approved: true },
-            { word: 'kiyasa', meaning: 'How', approved: true },
-            { word: 'hain', meaning: 'Where', approved: true },
-            { word: 'siinu', meaning: 'Who', approved: true },
-            { word: 'kunsu', meaning: 'When', approved: true },
-            { word: 'iyan', meaning: 'This', approved: true },
-            { word: 'itun', meaning: 'That', approved: true },
-            { word: 'kame', meaning: 'We', approved: true },
-            { word: 'kami', meaning: 'Us', approved: true },
-            { word: 'sila', meaning: 'They', approved: true },
-            { word: 'kaw', meaning: 'You', approved: true },
-            { word: 'aku', meaning: 'I', approved: true },
-            { word: 'kitaniyu', meaning: 'Our', approved: true },
-            { word: 'marayaw', meaning: 'Good', approved: true },
-            { word: 'maling', meaning: 'Bad', approved: true },
-            { word: 'dāgan', meaning: 'Run', approved: true },
-            { word: 'hūlum', meaning: 'Sit', approved: true },
-            { word: 'tindug', meaning: 'Stand', approved: true },
-            { word: 'kāun', meaning: 'Eat', approved: true },
-            { word: 'inum', meaning: 'Drink', approved: false },
-            { word: 'tūrig', meaning: 'Sleep', approved: false },
-            { word: 'bāy', meaning: 'House', approved: false },
-            { word: 'lupa', meaning: 'Land', approved: false },
-            { word: 'dagat', meaning: 'Sea', approved: false },
-            { word: 'ulan', meaning: 'Rain', approved: false },
-            { word: 'init', meaning: 'Sun', approved: false },
-            { word: 'bulan', meaning: 'Moon', approved: false },
-            { word: 'būlan', meaning: 'Month', approved: false },
-            { word: 'tahun', meaning: 'Year', approved: false }
+            { word: 'maunu-unu', meaning: 'What', approved: true, synonyms: [], additionalMeanings: [] },
+            { word: 'maanu', meaning: 'Why', approved: true, synonyms: [], additionalMeanings: [] },
+            { word: 'kiyasa', meaning: 'How', approved: true, synonyms: [], additionalMeanings: [] },
+            { word: 'hain', meaning: 'Where', approved: true, synonyms: [], additionalMeanings: [] },
+            { word: 'siinu', meaning: 'Who', approved: true, synonyms: [], additionalMeanings: [] },
+            { word: 'kunsu', meaning: 'When', approved: true, synonyms: [], additionalMeanings: [] },
+            { word: 'iyan', meaning: 'This', approved: true, synonyms: ['ini'], additionalMeanings: [] },
+            { word: 'itun', meaning: 'That', approved: true, synonyms: [], additionalMeanings: [] },
+            { word: 'kame', meaning: 'We', approved: true, synonyms: [], additionalMeanings: [] },
+            { word: 'kami', meaning: 'Us', approved: true, synonyms: [], additionalMeanings: [] },
+            { word: 'sila', meaning: 'They', approved: true, synonyms: [], additionalMeanings: [] },
+            { word: 'kaw', meaning: 'You', approved: true, synonyms: ['ikaw'], additionalMeanings: [] },
+            { word: 'aku', meaning: 'I', approved: true, synonyms: [], additionalMeanings: [] },
+            { word: 'kitaniyu', meaning: 'Our', approved: true, synonyms: [], additionalMeanings: [] },
+            { word: 'marayaw', meaning: 'Good', approved: true, synonyms: ['maisug', 'malagu'], additionalMeanings: ['Nice', 'Excellent'] },
+            { word: 'maling', meaning: 'Bad', approved: true, synonyms: ['maraat'], additionalMeanings: ['Not good', 'Poor quality'] },
+            { word: 'dāgan', meaning: 'Run', approved: true, synonyms: [], additionalMeanings: [] },
+            { word: 'hūlum', meaning: 'Sit', approved: true, synonyms: [], additionalMeanings: [] },
+            { word: 'tindug', meaning: 'Stand', approved: true, synonyms: [], additionalMeanings: [] },
+            { word: 'kāun', meaning: 'Eat', approved: true, synonyms: [], additionalMeanings: ['Consume food'] },
+            { word: 'inum', meaning: 'Drink', approved: false, synonyms: [], additionalMeanings: [] },
+            { word: 'tūrig', meaning: 'Sleep', approved: false, synonyms: [], additionalMeanings: [] },
+            { word: 'bāy', meaning: 'House', approved: false, synonyms: [], additionalMeanings: [] },
+            { word: 'lupa', meaning: 'Land', approved: false, synonyms: [], additionalMeanings: [] },
+            { word: 'dagat', meaning: 'Sea', approved: false, synonyms: [], additionalMeanings: [] },
+            { word: 'ulan', meaning: 'Rain', approved: false, synonyms: [], additionalMeanings: [] },
+            { word: 'init', meaning: 'Sun', approved: false, synonyms: [], additionalMeanings: [] },
+            { word: 'bulan', meaning: 'Moon', approved: false, synonyms: [], additionalMeanings: [] },
+            { word: 'būlan', meaning: 'Month', approved: false, synonyms: [], additionalMeanings: [] },
+            { word: 'tahun', meaning: 'Year', approved: false, synonyms: [], additionalMeanings: [] }
         ];
 
         // DOM elements
@@ -624,7 +686,19 @@
         const wordForm = document.getElementById('wordForm');
         const newWordInput = document.getElementById('newWord');
         const newMeaningInput = document.getElementById('newMeaning');
+        const newSynonymsInput = document.getElementById('newSynonyms');
         const successMessage = document.getElementById('successMessage');
+        
+        // Edit modal elements
+        const editWordModal = document.getElementById('editWordModal');
+        const closeEditModal = document.getElementById('closeEditModal');
+        const editWordForm = document.getElementById('editWordForm');
+        const editWordIndex = document.getElementById('editWordIndex');
+        const editWordInput = document.getElementById('editWord');
+        const editMeaningInput = document.getElementById('editMeaning');
+        const editSynonymsInput = document.getElementById('editSynonyms');
+        const editAdditionalMeaningsInput = document.getElementById('editAdditionalMeanings');
+        const editSuccessMessage = document.getElementById('editSuccessMessage');
 
         let editMode = false;
         let adminMode = false;
@@ -643,13 +717,28 @@
                     approvalBadge = '<span class="approved-badge">APPROVED</span>';
                 }
                 
+                let synonymsText = '';
+                if (item.synonyms && item.synonyms.length > 0) {
+                    synonymsText = `<div class="synonyms">Synonyms: ${item.synonyms.join(', ')}</div>`;
+                }
+                
+                let additionalMeaningsText = '';
+                if (item.additionalMeanings && item.additionalMeanings.length > 0) {
+                    additionalMeaningsText = `<div class="synonyms">Also: ${item.additionalMeanings.join(', ')}</div>`;
+                }
+                
                 wordItem.innerHTML = `
                     <div class="word-content">
-                        <span class="word">${item.word}${approvalBadge}</span>
-                        <span class="meaning">${item.meaning}</span>
+                        <div>
+                            <span class="word">${item.word}${approvalBadge}</span>
+                            <div class="meaning">${item.meaning}</div>
+                            ${synonymsText}
+                            ${additionalMeaningsText}
+                        </div>
                     </div>
                     <div class="word-actions">
-                        <button class="edit-btn" data-index="${index}"><i class="fas fa-edit"></i></button>
+                        ${adminMode && item.approved ? `<button class="edit-btn" data-index="${index}"><i class="fas fa-edit"></i></button>` : ''}
+                        <button class="edit-btn" data-index="${index}" style="${!adminMode || item.approved ? 'display:none' : ''}"><i class="fas fa-edit"></i></button>
                         <button class="save-btn" data-index="${index}"><i class="fas fa-check"></i></button>
                         <button class="cancel-btn" data-index="${index}"><i class="fas fa-times"></i></button>
                         <button class="delete-btn" data-index="${index}"><i class="fas fa-trash"></i></button>
@@ -665,10 +754,14 @@
             document.querySelectorAll('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const index = this.getAttribute('data-index');
-                    if (!dictionary[index].approved) {
+                    if (dictionary[index].approved && adminMode) {
+                        // Open edit modal for approved words in admin mode
+                        openEditModal(index);
+                    } else if (!dictionary[index].approved) {
+                        // Enable inline editing for unapproved words
                         enableEditMode(index);
                     } else {
-                        alert("Approved words cannot be edited. Please contact an admin.");
+                        alert("Approved words can only be edited by admins.");
                     }
                 });
             });
@@ -693,7 +786,7 @@
             document.querySelectorAll('.delete-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const index = this.getAttribute('data-index');
-                    if (!dictionary[index].approved) {
+                    if (!dictionary[index].approved || adminMode) {
                         deleteWord(index);
                     } else {
                         alert("Approved words cannot be deleted. Please contact an admin.");
@@ -713,6 +806,17 @@
             
             // Show/hide edit buttons based on edit mode
             toggleEditButtons();
+        }
+
+        // Open edit modal for approved words
+        function openEditModal(index) {
+            const word = dictionary[index];
+            editWordIndex.value = index;
+            editWordInput.value = word.word;
+            editMeaningInput.value = word.meaning;
+            editSynonymsInput.value = word.synonyms.join(', ');
+            editAdditionalMeaningsInput.value = word.additionalMeanings.join('\n');
+            editWordModal.style.display = 'flex';
         }
 
         // Toggle edit buttons visibility
@@ -849,7 +953,9 @@
             
             const results = dictionary.filter(item => 
                 item.word.toLowerCase().includes(searchTerm) || 
-                item.meaning.toLowerCase().includes(searchTerm)
+                item.meaning.toLowerCase().includes(searchTerm) ||
+                (item.synonyms && item.synonyms.some(s => s.toLowerCase().includes(searchTerm))) ||
+                (item.additionalMeanings && item.additionalMeanings.some(m => m.toLowerCase().includes(searchTerm)))
             );
             
             if (results.length > 0) {
@@ -859,7 +965,9 @@
                         <div class="word-item">
                             <div class="word-content">
                                 <span class="word">${item.word}${item.approved ? '<span class="approved-badge">APPROVED</span>' : ''}</span>
-                                <span class="meaning">${item.meaning}</span>
+                                <div class="meaning">${item.meaning}</div>
+                                ${item.synonyms && item.synonyms.length > 0 ? `<div class="synonyms">Synonyms: ${item.synonyms.join(', ')}</div>` : ''}
+                                ${item.additionalMeanings && item.additionalMeanings.length > 0 ? `<div class="synonyms">Also: ${item.additionalMeanings.join(', ')}</div>` : ''}
                             </div>
                         </div>
                     `).join('')}
@@ -923,37 +1031,55 @@
             }
         });
 
-        // Open modal
+        // Open add word modal
         addWordBtn.addEventListener('click', function() {
             addWordModal.style.display = 'flex';
         });
 
-        // Close modal
+        // Close modals
         closeModal.addEventListener('click', function() {
             addWordModal.style.display = 'none';
             successMessage.style.display = 'none';
             wordForm.reset();
         });
 
-        // Close modal when clicking outside
+        closeEditModal.addEventListener('click', function() {
+            editWordModal.style.display = 'none';
+            editSuccessMessage.style.display = 'none';
+            editWordForm.reset();
+        });
+
+        // Close modals when clicking outside
         window.addEventListener('click', function(event) {
             if (event.target === addWordModal) {
                 addWordModal.style.display = 'none';
                 successMessage.style.display = 'none';
                 wordForm.reset();
             }
+            if (event.target === editWordModal) {
+                editWordModal.style.display = 'none';
+                editSuccessMessage.style.display = 'none';
+                editWordForm.reset();
+            }
         });
 
-        // Handle form submission
+        // Handle add word form submission
         wordForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
             const newWord = newWordInput.value.trim();
             const newMeaning = newMeaningInput.value.trim();
+            const newSynonyms = newSynonymsInput.value.split(',').map(s => s.trim()).filter(s => s !== '');
             
             if (newWord && newMeaning) {
                 // Add new word to dictionary (not approved by default)
-                dictionary.push({ word: newWord.toLowerCase(), meaning: newMeaning, approved: false });
+                dictionary.push({ 
+                    word: newWord.toLowerCase(), 
+                    meaning: newMeaning, 
+                    approved: false, 
+                    synonyms: newSynonyms,
+                    additionalMeanings: []
+                });
                 
                 // Sort dictionary alphabetically
                 dictionary.sort((a, b) => a.word.localeCompare(b.word));
@@ -971,6 +1097,40 @@
                 setTimeout(function() {
                     successMessage.style.display = 'none';
                     addWordModal.style.display = 'none';
+                }, 2000);
+            }
+        });
+
+        // Handle edit word form submission
+        editWordForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const index = editWordIndex.value;
+            const editedWord = editWordInput.value.trim();
+            const editedMeaning = editMeaningInput.value.trim();
+            const editedSynonyms = editSynonymsInput.value.split(',').map(s => s.trim()).filter(s => s !== '');
+            const editedAdditionalMeanings = editAdditionalMeaningsInput.value.split('\n').map(m => m.trim()).filter(m => m !== '');
+            
+            if (editedWord && editedMeaning) {
+                // Update dictionary
+                dictionary[index].word = editedWord;
+                dictionary[index].meaning = editedMeaning;
+                dictionary[index].synonyms = editedSynonyms;
+                dictionary[index].additionalMeanings = editedAdditionalMeanings;
+                
+                // Sort dictionary alphabetically
+                dictionary.sort((a, b) => a.word.localeCompare(b.word));
+                
+                // Update display
+                displayWordList(dictionary);
+                
+                // Show success message
+                editSuccessMessage.style.display = 'block';
+                
+                // Hide success message and close modal after 2 seconds
+                setTimeout(function() {
+                    editSuccessMessage.style.display = 'none';
+                    editWordModal.style.display = 'none';
                 }, 2000);
             }
         });
