@@ -24,7 +24,7 @@
         
         .container {
             width: 100%;
-            max-width: 550px;
+            max-width: 600px;
             background-color: white;
             border-radius: 20px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
@@ -91,7 +91,14 @@
             background: #3498db;
         }
         
-        .add-word-btn {
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .add-word-btn, .edit-mode-btn {
             background: #27ae60;
             color: white;
             border: none;
@@ -102,16 +109,27 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 25px;
             font-size: 16px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .edit-mode-btn {
+            background: #e67e22;
+        }
+        
+        .edit-mode-btn.active {
+            background: #d35400;
         }
         
         .add-word-btn:hover {
             background: #2ecc71;
         }
         
-        .add-word-btn i {
+        .edit-mode-btn:hover {
+            background: #f39c12;
+        }
+        
+        .add-word-btn i, .edit-mode-btn i {
             margin-right: 8px;
         }
         
@@ -145,10 +163,17 @@
             justify-content: space-between;
             padding: 12px 0;
             border-bottom: 1px solid #eef2f7;
+            position: relative;
         }
         
         .word-item:last-child {
             border-bottom: none;
+        }
+        
+        .word-content {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
         }
         
         .word {
@@ -158,6 +183,57 @@
         
         .meaning {
             color: #7f8c8d;
+        }
+        
+        .word-actions {
+            display: flex;
+            gap: 8px;
+            margin-left: 15px;
+        }
+        
+        .edit-btn, .save-btn, .cancel-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        .edit-btn {
+            color: #3498db;
+        }
+        
+        .edit-btn:hover {
+            background: #ebf5fb;
+        }
+        
+        .save-btn {
+            color: #27ae60;
+            display: none;
+        }
+        
+        .save-btn:hover {
+            background: #eafaf1;
+        }
+        
+        .cancel-btn {
+            color: #e74c3c;
+            display: none;
+        }
+        
+        .cancel-btn:hover {
+            background: #fdedec;
+        }
+        
+        .edit-input {
+            border: 1px solid #3498db;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 14px;
+            width: 45%;
+            display: none;
         }
         
         .footer {
@@ -290,6 +366,21 @@
             .modal-content {
                 padding: 20px;
             }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .word-content {
+                flex-direction: column;
+            }
+            
+            .word-actions {
+                margin-left: 0;
+                margin-top: 8px;
+                justify-content: flex-end;
+            }
         }
     </style>
 </head>
@@ -309,9 +400,14 @@
                 </button>
             </div>
             
-            <button class="add-word-btn" id="addWordBtn">
-                <i class="fas fa-plus"></i> Add New Word
-            </button>
+            <div class="action-buttons">
+                <button class="add-word-btn" id="addWordBtn">
+                    <i class="fas fa-plus"></i> Add New Word
+                </button>
+                <button class="edit-mode-btn" id="editModeBtn">
+                    <i class="fas fa-edit"></i> Enable Editing
+                </button>
+            </div>
             
             <div id="searchResults"></div>
             
@@ -395,6 +491,7 @@
         const searchResults = document.getElementById('searchResults');
         const wordListContainer = document.getElementById('wordListContainer');
         const addWordBtn = document.getElementById('addWordBtn');
+        const editModeBtn = document.getElementById('editModeBtn');
         const addWordModal = document.getElementById('addWordModal');
         const closeModal = document.getElementById('closeModal');
         const wordForm = document.getElementById('wordForm');
@@ -402,19 +499,153 @@
         const newMeaningInput = document.getElementById('newMeaning');
         const successMessage = document.getElementById('successMessage');
 
+        let editMode = false;
+
         // Display word list
         function displayWordList(words) {
             wordListContainer.innerHTML = '';
             
-            words.forEach(item => {
+            words.forEach((item, index) => {
                 const wordItem = document.createElement('div');
                 wordItem.className = 'word-item';
                 wordItem.innerHTML = `
-                    <span class="word">${item.word}</span>
-                    <span class="meaning">${item.meaning}</span>
+                    <div class="word-content">
+                        <span class="word">${item.word}</span>
+                        <span class="meaning">${item.meaning}</span>
+                    </div>
+                    <div class="word-actions">
+                        <button class="edit-btn" data-index="${index}"><i class="fas fa-edit"></i></button>
+                        <button class="save-btn" data-index="${index}"><i class="fas fa-check"></i></button>
+                        <button class="cancel-btn" data-index="${index}"><i class="fas fa-times"></i></button>
+                    </div>
+                    <input type="text" class="edit-input word-edit" data-index="${index}" value="${item.word}" placeholder="Tausug word">
+                    <input type="text" class="edit-input meaning-edit" data-index="${index}" value="${item.meaning}" placeholder="English meaning">
                 `;
                 wordListContainer.appendChild(wordItem);
             });
+            
+            // Add event listeners to edit buttons
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    enableEditMode(index);
+                });
+            });
+            
+            // Add event listeners to save buttons
+            document.querySelectorAll('.save-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    saveWord(index);
+                });
+            });
+            
+            // Add event listeners to cancel buttons
+            document.querySelectorAll('.cancel-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    cancelEdit(index);
+                });
+            });
+            
+            // Show/hide edit buttons based on edit mode
+            toggleEditButtons();
+        }
+
+        // Toggle edit buttons visibility
+        function toggleEditButtons() {
+            const editButtons = document.querySelectorAll('.edit-btn');
+            editButtons.forEach(btn => {
+                btn.style.display = editMode ? 'block' : 'none';
+            });
+            
+            // Update edit mode button text
+            editModeBtn.innerHTML = editMode ? 
+                '<i class="fas fa-times"></i> Disable Editing' : 
+                '<i class="fas fa-edit"></i> Enable Editing';
+                
+            editModeBtn.classList.toggle('active', editMode);
+        }
+
+        // Enable edit mode for a specific word
+        function enableEditMode(index) {
+            const wordItem = document.querySelector(`.word-item:nth-child(${parseInt(index) + 1})`);
+            const wordText = wordItem.querySelector('.word');
+            const meaningText = wordItem.querySelector('.meaning');
+            const wordEdit = wordItem.querySelector('.word-edit');
+            const meaningEdit = wordItem.querySelector('.meaning-edit');
+            const editBtn = wordItem.querySelector('.edit-btn');
+            const saveBtn = wordItem.querySelector('.save-btn');
+            const cancelBtn = wordItem.querySelector('.cancel-btn');
+            
+            // Hide text, show inputs
+            wordText.style.display = 'none';
+            meaningText.style.display = 'none';
+            wordEdit.style.display = 'block';
+            meaningEdit.style.display = 'block';
+            editBtn.style.display = 'none';
+            saveBtn.style.display = 'block';
+            cancelBtn.style.display = 'block';
+        }
+
+        // Save edited word
+        function saveWord(index) {
+            const wordItem = document.querySelector(`.word-item:nth-child(${parseInt(index) + 1})`);
+            const wordEdit = wordItem.querySelector('.word-edit');
+            const meaningEdit = wordItem.querySelector('.meaning-edit');
+            const wordText = wordItem.querySelector('.word');
+            const meaningText = wordItem.querySelector('.meaning');
+            const editBtn = wordItem.querySelector('.edit-btn');
+            const saveBtn = wordItem.querySelector('.save-btn');
+            const cancelBtn = wordItem.querySelector('.cancel-btn');
+            
+            // Update dictionary
+            dictionary[index].word = wordEdit.value.trim();
+            dictionary[index].meaning = meaningEdit.value.trim();
+            
+            // Update display
+            wordText.textContent = dictionary[index].word;
+            meaningText.textContent = dictionary[index].meaning;
+            
+            // Show text, hide inputs
+            wordText.style.display = 'block';
+            meaningText.style.display = 'block';
+            wordEdit.style.display = 'none';
+            meaningEdit.style.display = 'none';
+            editBtn.style.display = editMode ? 'block' : 'none';
+            saveBtn.style.display = 'none';
+            cancelBtn.style.display = 'none';
+            
+            // Sort dictionary
+            dictionary.sort((a, b) => a.word.localeCompare(b.word));
+            
+            // Refresh display
+            displayWordList(dictionary);
+        }
+
+        // Cancel edit
+        function cancelEdit(index) {
+            const wordItem = document.querySelector(`.word-item:nth-child(${parseInt(index) + 1})`);
+            const wordEdit = wordItem.querySelector('.word-edit');
+            const meaningEdit = wordItem.querySelector('.meaning-edit');
+            const wordText = wordItem.querySelector('.word');
+            const meaningText = wordItem.querySelector('.meaning');
+            const editBtn = wordItem.querySelector('.edit-btn');
+            const saveBtn = wordItem.querySelector('.save-btn');
+            const cancelBtn = wordItem.querySelector('.cancel-btn');
+            
+            // Restore original values
+            wordEdit.value = dictionary[index].word;
+            meaningEdit.value = dictionary[index].meaning;
+            
+            // Show text, hide inputs
+            wordText.style.display = 'block';
+            meaningText.style.display = 'block';
+            wordEdit.style.display = 'none';
+            meaningEdit.style.display = 'none';
+            editBtn.style.display = editMode ? 'block' : 'none';
+            saveBtn.style.display = 'none';
+            cancelBtn.style.display = 'none';
         }
 
         // Search function
@@ -437,8 +668,10 @@
                     <h3>Search Results for "${searchTerm}":</h3>
                     ${results.map(item => `
                         <div class="word-item">
-                            <span class="word">${item.word}</span>
-                            <span class="meaning">${item.meaning}</span>
+                            <div class="word-content">
+                                <span class="word">${item.word}</span>
+                                <span class="meaning">${item.meaning}</span>
+                            </div>
                         </div>
                     `).join('')}
                 `;
@@ -452,6 +685,12 @@
                 wordListContainer.innerHTML = '';
             }
         }
+
+        // Toggle edit mode
+        editModeBtn.addEventListener('click', function() {
+            editMode = !editMode;
+            toggleEditButtons();
+        });
 
         // Open modal
         addWordBtn.addEventListener('click', function() {
